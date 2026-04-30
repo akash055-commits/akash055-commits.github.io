@@ -224,6 +224,34 @@
   }
   .hero .lede b{ color: var(--ink); font-weight: 600; }
 
+  .hero-grid{
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .hero-portrait{
+    position: relative;
+  }
+  .hero-portrait img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid var(--rule);
+    filter: grayscale(100%) contrast(1.02);
+    box-shadow: 0 18px 40px -24px rgba(11,13,16,0.35);
+  }
+  @media (max-width: 780px){
+    .hero-grid{
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero-portrait{
+      max-width: 260px;
+    }
+  }
+
   .hero .stats{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -957,18 +985,25 @@
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="wrap">
-    <div class="eyebrow">
-      <span class="pulse"></span>
-      <span>Performance Marketing &amp; Growth</span>
+    <div class="hero-grid">
+      <div class="hero-intro">
+        <div class="eyebrow">
+          <span class="pulse"></span>
+          <span>Performance Marketing &amp; Growth</span>
+        </div>
+
+        <h1>Akash<br>Chaurasia<span class="soft">.</span></h1>
+
+        <p class="lede" style="margin-bottom: 0;">
+          <b>Building the growth engine at Housing.com.</b> Previously co-founded <b>Flex EV</b> (0 → 500 vehicles). I work at the seam of paid media, measurement, and AI creative ops — as an operator &amp; strategist.
+        </p>
+      </div>
+      <div class="hero-portrait">
+        <img src="photos/portrait.jpeg" alt="Akash Chaurasia portrait" loading="eager">
+      </div>
     </div>
 
-    <h1>Akash<br>Chaurasia<span class="soft">.</span></h1>
-
-    <p class="lede">
-      <b>Building the growth engine at Housing.com.</b> Previously co-founded <b>Flex EV</b> (0 → 500 vehicles). I work at the seam of paid media, measurement, and AI creative ops — as an operator &amp; strategist.
-    </p>
-
-    <div class="stats">
+    <div class="stats" style="margin-top: 48px;">
       <div class="stat">
         <div class="v">₹<span class="num-target" data-count="3.5" data-decimals="1">0.0</span><span class="u">Cr / mo</span></div>
         <div class="k">Meta + Google spend managed</div>
