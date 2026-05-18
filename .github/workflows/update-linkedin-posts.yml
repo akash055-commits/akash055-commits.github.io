@@ -1,0 +1,107 @@
+name: Update LinkedIn Posts
+
+# Runs daily at 7 AM IST (1:30 AM UTC).
+# Also triggerable manually from the Actions tab.
+#
+# SETUP (one-time):
+#   1. Go to https://rss.app and create a free feed from your LinkedIn profile URL.
+#   2. Copy the RSS feed URL (e.g. https://rss.app/feeds/xxxxxxxxx.xml).
+#   3. In your GitHub repo → Settings → Secrets → Actions, add:
+#      Name:  LINKEDIN_RSS_URL
+#      Value: <your rss.app feed URL>
+#   4. That's it. The workflow will update posts.json automatically every day.
+
+on:
+  schedule:
+    - cron: '30 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-posts:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch & parse RSS
+        env:
+          RSS_URL: ${{ secrets.LINKEDIN_RSS_URL }}
+        run: |
+          if [ -z "$RSS_URL" ]; then
+            echo "LINKEDIN_RSS_URL secret not set — skipping update."
+            exit 0
+          fi
+
+          curl -sSL "$RSS_URL" -o feed.xml
+
+          python3 - <<'EOF'
+          import xml.etree.ElementTree as ET
+          import json, re, os
+          from datetime import datetime
+
+          tree = ET.parse('feed.xml')
+          root = tree.getroot()
+
+          ns = {}
+          # Handle Atom or RSS
+          items = root.findall('.//item') or root.findall('.//{http://www.w3.org/2005/Atom}entry')
+
+          posts = []
+          for item in items[:6]:
+              def t(tag):
+                  el = item.find(tag)
+                  return el.text.strip() if el is not None and el.text else ''
+
+              title   = t('title') or t('{http://www.w3.org/2005/Atom}title')
+              link    = t('link')  or t('{http://www.w3.org/2005/Atom}id')
+              pubdate = t('pubDate') or t('{http://www.w3.org/2005/Atom}published')
+              desc    = t('description') or t('{http://www.w3.org/2005/Atom}summary') or title
+
+              # Strip HTML tags
+              content = re.sub(r'<[^>]+>', '', desc).strip()
+              content = re.sub(r'&amp;', '&', content)
+              content = re.sub(r'&lt;', '<', content)
+              content = re.sub(r'&gt;', '>', content)
+              content = re.sub(r'&nbsp;', ' ', content)
+              content = re.sub(r'\n{3,}', '\n\n', content)
+
+              # Format date
+              try:
+                  d = datetime.strptime(pubdate[:16].strip(), '%a, %d %b %Y')
+                  friendly = d.strftime('%b %-d, %Y')
+              except Exception:
+                  friendly = pubdate[:10] if pubdate else ''
+
+              posts.append({
+                  'date': friendly,
+                  'content': content[:500],
+                  'likes': 0,
+                  'comments': 0,
+                  'url': link
+              })
+
+          out = {
+              'lastUpdated': datetime.utcnow().strftime('%Y-%m-%d'),
+              'posts': posts
+          }
+
+          with open('posts.json', 'w') as f:
+              json.dump(out, f, indent=2, ensure_ascii=False)
+
+          print(f"Wrote {len(posts)} posts.")
+          EOF
+
+      - name: Commit updated posts.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add posts.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update LinkedIn posts [skip ci]"
+            git push
+          fi
