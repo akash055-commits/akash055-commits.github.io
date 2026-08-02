@@ -57,9 +57,11 @@
      TOKENS — LIGHT
      ============================================ */
   :root {
+    color-scheme: light;
     --paper:      #F5F4EE;
     --paper-2:    #EFEDE5;
     --card:       #FBFAF6;
+    --wash:       #EDEAE0;
     --ink:        #0B0D10;
     --ink-2:      #1F232A;
     --ink-3:      #3A414D;
@@ -68,7 +70,6 @@
     --rule:       #DDDACF;
     --rule-soft:  #E6E3D8;
     --accent:     #C2410C;
-    --accent-soft:#F4E6DC;
 
     --f-sans:    "Geist", ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
     --f-display: "Fraunces", "Source Serif 4", Georgia, serif;
@@ -83,18 +84,19 @@
      TOKENS — DARK
      ============================================ */
   :root[data-theme="dark"] {
-    --paper:      #0D0D0D;
-    --paper-2:    #141414;
-    --card:       #1A1A1A;
+    color-scheme: dark;
+    --paper:      #0C0C0E;
+    --paper-2:    #131316;
+    --card:       #171719;
+    --wash:       #1A1A1D;
     --ink:        #EDEDEF;
-    --ink-2:      #C4C4C6;
-    --ink-3:      #8A8A8C;
-    --muted:      #6B7180;
-    --muted-2:    #45454A;
+    --ink-2:      #C0C0C4;
+    --ink-3:      #85858B;
+    --muted:      #74747C;
+    --muted-2:    #4A4A52;
     --rule:       #2A2A2E;
-    --rule-soft:  #1E1E22;
-    --accent:     #FF6B35;
-    --accent-soft:#2A1A10;
+    --rule-soft:  #202024;
+    --accent:     #E8845C;
   }
 
   /* ============================================
@@ -114,14 +116,14 @@
     text-rendering: optimizeLegibility;
     font-feature-settings: "ss01","cv11";
     overflow-x: hidden;
-    transition: background-color .35s ease, color .25s ease;
+    -webkit-tap-highlight-color: color-mix(in oklab, var(--accent) 18%, transparent);
+    transition: background-color .3s ease, color .2s ease;
   }
   a { color: inherit; text-decoration: none; }
   ::selection { background: var(--accent); color: #fff; }
   img { max-width: 100%; display: block; }
   picture { display: block; }
 
-  /* Keyboard users shouldn't have to tab the whole nav to reach content. */
   .skip {
     position: absolute; left: -9999px; top: 0; z-index: 200;
     background: var(--ink); color: var(--paper);
@@ -132,249 +134,219 @@
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
   /* ============================================
-     CANVAS BACKGROUND
-     ============================================ */
-  #bg-canvas {
-    position: fixed;
-    inset: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
-  .nav, main, footer, .scroll-progress, .back-top, .mobile-menu {
-    position: relative;
-    z-index: 1;
-  }
-  .nav       { z-index: 50; }
-  .back-top  { z-index: 60; }
-  .mobile-menu { z-index: 49; }
-
-  /* ============================================
      NAV
      ============================================ */
   .nav {
-    position: sticky;
-    top: 0;
-    background: color-mix(in oklab, var(--paper) 88%, transparent);
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in oklab, var(--paper) 90%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--rule);
-    transition: background .35s ease, border-color .25s ease;
+    transition: background .3s ease, border-color .2s ease;
   }
   .nav-inner {
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: 0 var(--pad);
+    max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad);
     height: var(--nav-h);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
   }
   .nav .mark {
-    font-family: var(--f-mono);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: -.01em;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
+    font-family: var(--f-mono); font-size: 13px; font-weight: 500;
+    letter-spacing: -.01em; color: var(--ink);
+    display: flex; align-items: center; gap: 10px; flex-shrink: 0;
   }
-  .nav .mark .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-  .nav ul {
-    list-style: none; padding: 0; margin: 0;
-    display: flex; gap: 4px;
-  }
+  .nav .mark .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 2px; }
   .nav ul a {
-    font-family: var(--f-mono);
-    font-size: 12px;
-    color: var(--muted);
-    padding: 6px 10px;
-    border-radius: 6px;
-    transition: color .15s, background .15s;
+    font-family: var(--f-mono); font-size: 12px; color: var(--muted);
+    padding: 8px 11px; border-radius: 6px;
+    display: block; transition: color .15s, background .15s;
   }
   .nav ul a:hover { color: var(--ink); background: var(--paper-2); }
-  .nav-right {
-    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
-  }
+  .nav ul a[aria-current="true"] { color: var(--ink); }
+  .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
   .theme-toggle {
     display: flex; align-items: center; gap: 6px;
-    font-family: var(--f-mono); font-size: 11px;
-    color: var(--muted);
-    background: none;
-    border: 1px solid var(--rule);
-    border-radius: 20px;
-    padding: 5px 11px;
-    cursor: pointer;
+    font-family: var(--f-mono); font-size: 11px; color: var(--muted);
+    background: none; border: 1px solid var(--rule); border-radius: 20px;
+    padding: 6px 12px; cursor: pointer;
     transition: color .15s, border-color .15s, background .15s;
     white-space: nowrap; line-height: 1;
   }
   .theme-toggle:hover { color: var(--ink); border-color: var(--ink-3); background: var(--paper-2); }
   .nav .cta {
-    font-family: var(--f-mono); font-size: 12px;
-    padding: 8px 14px;
-    background: var(--ink); color: var(--paper);
-    border-radius: 6px;
-    transition: background .15s;
-    white-space: nowrap;
+    font-family: var(--f-mono); font-size: 12px; padding: 8px 14px;
+    background: var(--ink); color: var(--paper); border-radius: 6px;
+    transition: background .15s, color .15s; white-space: nowrap;
   }
-  .nav .cta:hover { background: var(--accent); }
-  :root[data-theme="dark"] .nav .cta { background: var(--accent); color: #fff; }
-  :root[data-theme="dark"] .nav .cta:hover { background: #e05520; }
+  .nav .cta:hover { background: var(--accent); color: #fff; }
 
   .hamburger {
-    display: none;
-    flex-direction: column; justify-content: space-between;
-    width: 22px; height: 15px;
-    background: none; border: none; padding: 0; cursor: pointer;
+    display: none; flex-direction: column; justify-content: space-between;
+    width: 22px; height: 15px; background: none; border: none; padding: 0; cursor: pointer;
   }
   .hamburger span {
-    display: block; height: 1.5px;
-    background: var(--ink); border-radius: 2px;
-    transition: transform .28s ease, opacity .28s ease, background .25s;
+    display: block; height: 1.5px; background: var(--ink); border-radius: 2px;
+    transition: transform .28s ease, opacity .28s ease, background .2s;
   }
   .hamburger.open span:nth-child(1) { transform: translateY(6.75px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
   .hamburger.open span:nth-child(3) { transform: translateY(-6.75px) rotate(-45deg); }
 
-  /* The inline nav needs ~940px to fit seven items plus the toggle and CTA.
-     Below that it pushed the Email button off-screen, so collapse to the menu earlier. */
-  @media (max-width: 960px) {
+  @media (max-width: 820px) {
     .nav ul { display: none; }
     .nav .cta, .theme-toggle { display: none; }
     .hamburger { display: flex; }
   }
 
+  /* Sticky bucket label — only where the inline nav is gone */
+  .rail {
+    display: none;
+    position: sticky; top: var(--nav-h); z-index: 40;
+    background: color-mix(in oklab, var(--paper) 92%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule-soft);
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 9px var(--pad);
+  }
+  .rail::before { content: "▸ "; color: var(--accent); }
+  @media (max-width: 820px) { .rail { display: block; } }
+
   /* Mobile overlay */
   .mobile-menu {
     display: none;
-    position: fixed;
-    top: var(--nav-h); left: 0; right: 0; bottom: 0;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; z-index: 49;
     background: var(--paper);
-    flex-direction: column;
-    padding: 24px var(--pad) 40px;
-    overflow-y: auto;
-    transition: background .35s ease;
+    flex-direction: column; padding: 20px var(--pad) 36px; overflow-y: auto;
   }
   .mobile-menu.open { display: flex; }
   .mobile-menu nav a {
     font-family: var(--f-display); font-size: 26px; font-weight: 500;
-    color: var(--ink); padding: 17px 0;
+    color: var(--ink); padding: 18px 0; min-height: 48px;
     border-bottom: 1px solid var(--rule);
     display: flex; justify-content: space-between; align-items: center;
     transition: color .2s;
   }
   .mobile-menu nav a:hover { color: var(--accent); }
   .mobile-menu nav a .arr { font-family: var(--f-mono); font-size: 15px; color: var(--muted); }
-  .mobile-menu .mobile-ctas {
-    margin-top: 28px; display: flex; flex-direction: column; gap: 12px;
-  }
-  .mobile-menu .m-theme {
-    margin-top: auto; padding-top: 24px;
-  }
-  .mobile-menu .theme-toggle { display: flex; }
+  .mobile-menu .mobile-ctas { margin-top: 26px; display: flex; flex-direction: column; gap: 12px; }
+  .mobile-menu .m-theme { margin-top: auto; padding-top: 24px; }
+  .mobile-menu .theme-toggle { display: flex; padding: 12px 16px; }
 
   /* ============================================
      LAYOUT
      ============================================ */
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
   section {
-    padding: clamp(64px, 9vh, 108px) 0;
+    padding: clamp(52px, 8vh, 100px) 0;
     border-bottom: 1px solid var(--rule);
+    scroll-margin-top: calc(var(--nav-h) + 12px);
   }
   section:last-of-type { border-bottom: 0; }
-  .section-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 44px; }
-  .section-head .kicker {
-    font-family: var(--f-mono); font-size: 11px;
-    text-transform: uppercase; letter-spacing: .14em;
-    color: var(--muted); flex-shrink: 0; padding-top: 6px;
+
+  .bucket-head { margin-bottom: clamp(28px, 4vh, 48px); }
+  .bucket-head .tag {
+    font-family: var(--f-mono); font-size: 10.5px;
+    text-transform: uppercase; letter-spacing: .18em;
+    color: var(--muted); margin-bottom: 14px;
   }
-  .section-head h2 {
+  .bucket-head h2 {
     font-family: var(--f-display); font-weight: 500;
-    font-size: clamp(26px, 4vw, 42px);
-    line-height: 1.05; letter-spacing: -.02em; margin: 0; color: var(--ink);
+    font-size: clamp(28px, 4.4vw, 46px);
+    line-height: 1.04; letter-spacing: -.025em; margin: 0; color: var(--ink);
+    max-width: 20ch;
   }
-  @media (max-width: 640px) { .section-head { flex-direction: column; gap: 8px; margin-bottom: 28px; } }
+  .bucket-head p {
+    font-size: 15.5px; line-height: 1.6; color: var(--muted);
+    margin: 14px 0 0; max-width: 56ch;
+  }
 
   /* ============================================
-     HERO
+     HERO / ABOUT
      ============================================ */
-  .hero {
-    padding: clamp(56px, 10vh, 108px) 0 clamp(48px, 8vh, 88px);
-    border-bottom: 1px solid var(--rule);
-  }
+  .hero { padding: clamp(48px, 9vh, 96px) 0 clamp(44px, 7vh, 80px); }
   .hero .eyebrow {
-    font-family: var(--f-mono); font-size: 12px;
-    color: var(--muted); letter-spacing: .04em;
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 32px;
+    font-family: var(--f-mono); font-size: 12px; color: var(--muted);
+    letter-spacing: .04em; display: flex; align-items: center; gap: 10px;
+    margin-bottom: 30px;
   }
   .hero .eyebrow .pulse {
     width: 7px; height: 7px; border-radius: 50%;
     background: var(--accent); position: relative; flex-shrink: 0;
   }
   .hero .eyebrow .pulse::after {
-    content: "";
-    position: absolute; inset: -4px; border-radius: 50%;
-    background: var(--accent); opacity: .35;
-    animation: pulse 2.4s ease-out infinite;
+    content: ""; position: absolute; inset: -4px; border-radius: 50%;
+    background: var(--accent); opacity: .3; animation: pulse 2.6s ease-out infinite;
   }
-  @keyframes pulse {
-    0%   { transform: scale(.6); opacity: .4; }
-    100% { transform: scale(1.8); opacity: 0; }
-  }
+  @keyframes pulse { 0% { transform: scale(.6); opacity: .35; } 100% { transform: scale(1.8); opacity: 0; } }
+
   .hero h1 {
     font-family: var(--f-display); font-weight: 500;
-    font-size: clamp(48px, 8.2vw, 108px);
-    line-height: .96; letter-spacing: -.035em;
-    margin: 0 0 26px; color: var(--ink);
+    font-size: clamp(46px, 8vw, 104px);
+    line-height: .96; letter-spacing: -.035em; margin: 0 0 24px; color: var(--ink);
   }
   .hero h1 .soft { color: var(--muted-2); font-style: italic; font-weight: 400; }
   .hero .lede {
-    font-size: clamp(16px, 1.9vw, 19px); line-height: 1.52;
-    color: var(--ink-2); max-width: 54ch;
-    margin: 0 0 44px; font-weight: 450;
+    font-size: clamp(16px, 1.8vw, 18.5px); line-height: 1.55;
+    color: var(--ink-2); max-width: 54ch; margin: 0 0 40px; font-weight: 450;
   }
   .hero .lede b { color: var(--ink); font-weight: 600; }
+
   .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
-    gap: clamp(28px, 5vw, 60px); align-items: center;
+    display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 56px); align-items: center;
   }
+  /* Portrait dissolved into the paper, not boxed on top of it.
+     The photo was shot on a dark backdrop, so the two themes need different
+     treatments: light gets a diagonal dissolve (the dark mass melts toward the
+     bottom-left), dark gets `screen` — which drops the backdrop out entirely. */
   .hero-portrait img {
-    width: 100%; height: auto; border-radius: 10px;
-    border: 1px solid var(--rule);
-    filter: grayscale(100%) contrast(1.02);
-    box-shadow: 0 18px 40px -24px rgba(11,13,16,.35);
-    transition: filter .35s ease, border-color .25s;
+    width: 100%; height: auto;
+    border: 0; border-radius: 0; box-shadow: none;
+    filter: grayscale(100%) contrast(1.02) brightness(1.12);
+    /* A diagonal dissolve toward the bottom-left, intersected with a fade on
+       each of the four edges — so the photo never ends on a hard line. */
+    -webkit-mask-image:
+      linear-gradient(200deg, #000 4%, rgba(0,0,0,.94) 34%, rgba(0,0,0,.34) 72%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 13%),
+      linear-gradient(to top,    transparent 0%, #000 11%),
+      linear-gradient(to left,   transparent 0%, #000 15%),
+      linear-gradient(to right,  transparent 0%, #000 13%);
+    mask-image:
+      linear-gradient(200deg, #000 4%, rgba(0,0,0,.94) 34%, rgba(0,0,0,.34) 72%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 13%),
+      linear-gradient(to top,    transparent 0%, #000 11%),
+      linear-gradient(to left,   transparent 0%, #000 15%),
+      linear-gradient(to right,  transparent 0%, #000 13%);
+    -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+    transition: filter .3s ease;
   }
   :root[data-theme="dark"] .hero-portrait img {
-    filter: grayscale(100%) contrast(.95) brightness(.8);
-    box-shadow: 0 18px 40px -24px rgba(0,0,0,.6);
+    /* `screen` drops the dark studio backdrop straight out into the dark page. */
+    filter: grayscale(100%) contrast(1.06) brightness(.96);
+    mix-blend-mode: screen;
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, rgba(0,0,0,.45) 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 72%, rgba(0,0,0,.45) 90%, transparent 100%);
+    -webkit-mask-composite: source-over;
+            mask-composite: add;
   }
   @media (max-width: 780px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 28px; }
-    .hero-portrait { max-width: 240px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 8px; }
+    .hero-portrait { max-width: 260px; margin: 0 auto; }
   }
 
   .hero .stats {
     display: grid; grid-template-columns: repeat(3, 1fr);
     border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
-    margin-bottom: 44px;
+    margin: 40px 0;
   }
-  .hero .stat { padding: 22px 22px 22px 0; border-right: 1px solid var(--rule-soft); transition: border-color .25s; }
+  .hero .stat { padding: 22px 22px 22px 0; border-right: 1px solid var(--rule-soft); }
   .hero .stat:last-child  { border-right: 0; padding-right: 0; padding-left: 22px; }
   .hero .stat:nth-child(2){ padding-left: 22px; }
   .hero .stat .v {
     font-family: var(--f-display); font-weight: 500;
-    font-size: clamp(26px, 4.2vw, 42px); line-height: 1;
+    font-size: clamp(26px, 4vw, 40px); line-height: 1;
     letter-spacing: -.025em; color: var(--ink);
     font-variant-numeric: tabular-nums; margin-bottom: 9px;
   }
@@ -382,7 +354,7 @@
   .hero .stat .k { font-family: var(--f-mono); font-size: 11px; color: var(--muted); letter-spacing: .04em; line-height: 1.4; }
   @media (max-width: 640px) {
     .hero .stats { grid-template-columns: 1fr; }
-    .hero .stat { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding: 18px 0 !important; }
+    .hero .stat { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding: 16px 0 !important; }
     .hero .stat:last-child { border-bottom: 0; }
     .hero .stat:first-child { padding-top: 0 !important; }
   }
@@ -393,94 +365,142 @@
      ============================================ */
   .btn {
     font-family: var(--f-sans); font-weight: 500; font-size: 14.5px;
-    padding: 12px 20px; border-radius: 8px;
+    padding: 13px 20px; border-radius: 8px; min-height: 46px;
     border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
-    cursor: pointer;
-    transition: background .15s, border-color .15s, color .15s, transform .2s;
-    display: inline-flex; align-items: center; gap: 9px;
-    will-change: transform;
+    cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   }
   .btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-  :root[data-theme="dark"] .btn { background: var(--accent); border-color: var(--accent); color: #fff; }
-  :root[data-theme="dark"] .btn:hover { background: #e05520; border-color: #e05520; }
   .btn.ghost { background: transparent; color: var(--ink); border-color: var(--ink-3); }
   .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   :root[data-theme="dark"] .btn.ghost { color: var(--ink); border-color: var(--rule); }
-  :root[data-theme="dark"] .btn.ghost:hover { background: var(--card); border-color: var(--ink-3); }
+  :root[data-theme="dark"] .btn.ghost:hover { background: var(--card); border-color: var(--ink-3); color: var(--ink); }
   .btn .arr { font-family: var(--f-mono); font-size: 13px; }
+
+  /* ============================================
+     ROLE BLOCK — the skim layer + expander
+     ============================================ */
+  .role-block {
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+  .role-block:last-of-type { border-bottom: 1px solid var(--rule); }
+
+  .role-block > summary {
+    list-style: none; cursor: pointer;
+    padding: clamp(26px, 3.4vh, 38px) 0;
+    display: block;
+    transition: background .18s ease;
+  }
+  .role-block > summary::-webkit-details-marker { display: none; }
+  .role-block > summary::marker { content: ""; }
+  .role-block > summary:hover .rb-title h3 { color: var(--accent); }
+
+  .rb-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .rb-title h3 {
+    font-family: var(--f-display); font-weight: 500;
+    font-size: clamp(24px, 3.2vw, 34px); line-height: 1.1; letter-spacing: -.025em;
+    margin: 0 0 8px; color: var(--ink); transition: color .18s;
+  }
+  .rb-meta { font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); letter-spacing: .04em; }
+  .rb-toggle {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    border: 1px solid var(--rule); border-radius: 20px;
+    padding: 9px 15px; min-height: 40px; white-space: nowrap;
+    transition: border-color .18s, color .18s, background .18s;
+  }
+  .role-block > summary:hover .rb-toggle { border-color: var(--ink-3); color: var(--ink); background: var(--paper-2); }
+  .rb-chev { display: inline-block; transition: transform .28s cubic-bezier(.2,.7,.2,1); font-size: 13px; line-height: 1; }
+  .role-block[open] .rb-chev { transform: rotate(180deg); }
+  .role-block[open] .rb-toggle .lbl-closed { display: none; }
+  .rb-toggle .lbl-open { display: none; }
+  .role-block[open] .rb-toggle .lbl-open { display: inline; }
+
+  .rb-line { font-size: 16px; line-height: 1.6; color: var(--ink-2); margin: 18px 0 0; max-width: 62ch; }
+  .rb-line b { color: var(--ink); font-weight: 600; }
+
+  .rb-stats { display: flex; flex-wrap: wrap; gap: 12px 44px; margin-top: 24px; }
+  .rb-stats .s .v {
+    font-family: var(--f-display); font-weight: 500; font-size: clamp(22px, 2.6vw, 28px);
+    line-height: 1; letter-spacing: -.02em; color: var(--ink);
+    font-variant-numeric: tabular-nums; margin-bottom: 7px;
+  }
+  .rb-stats .s .v .u { font-family: var(--f-sans); font-size: .46em; color: var(--muted); font-weight: 500; margin-left: 3px; }
+  .rb-stats .s .k { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); letter-spacing: .05em; }
+
+  .rb-body { padding-bottom: clamp(30px, 4vh, 46px); }
+  .role-block[open] > .rb-body { animation: rbIn .4s cubic-bezier(.2,.7,.2,1); }
+  @keyframes rbIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+  /* Height animation where the browser supports it; harmless everywhere else. */
+  @supports (interpolate-size: allow-keywords) {
+    :root { interpolate-size: allow-keywords; }
+    .role-block::details-content {
+      block-size: 0; overflow: hidden;
+      transition: block-size .42s cubic-bezier(.2,.7,.2,1), content-visibility .42s allow-discrete;
+    }
+    .role-block[open]::details-content { block-size: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .role-block[open] > .rb-body { animation: none; }
+    .rb-chev { transition: none; }
+    @supports (interpolate-size: allow-keywords) {
+      .role-block::details-content { transition: none; }
+    }
+  }
 
   /* ============================================
      CASE CARDS
      ============================================ */
-  .work-meta {
-    display: flex; justify-content: space-between; align-items: baseline;
-    flex-wrap: wrap; gap: 14px;
-    margin-bottom: 32px; padding-bottom: 18px;
-    border-bottom: 1px dashed var(--rule);
-  }
-  .work-meta .role { font-family: var(--f-sans); font-size: 15px; color: var(--ink-2); font-weight: 500; }
-  .work-meta .role .co { color: var(--ink); font-weight: 600; }
-  .work-meta .period { font-family: var(--f-mono); font-size: 12px; color: var(--muted); letter-spacing: .04em; }
-
-  .cases { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .cases { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   @media (max-width: 780px) { .cases { grid-template-columns: 1fr; } }
 
   .case {
     background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
-    padding: 26px 26px 22px; display: flex; flex-direction: column;
-    position: relative; overflow: hidden;
-    transition: border-color .2s, transform .25s ease, box-shadow .25s ease, background .25s;
+    padding: 24px 24px 20px; display: flex; flex-direction: column;
+    transition: border-color .2s, background .2s;
   }
-  .case::before {
-    content: ""; position: absolute; top: 0; right: 0;
-    width: 0; height: 0;
-    border-left: 24px solid transparent; border-top: 24px solid var(--accent);
-    opacity: 0; transition: opacity .25s ease; pointer-events: none;
-  }
-  .case:hover { border-color: var(--ink-3); transform: translateY(-3px); box-shadow: 0 12px 32px -18px rgba(0,0,0,.15); }
-  .case:hover::before { opacity: 1; }
-  :root[data-theme="dark"] .case:hover { box-shadow: 0 12px 32px -18px rgba(0,0,0,.5); }
-  .case .case-n { font-family: var(--f-mono); font-size: 11px; color: var(--muted-2); letter-spacing: .1em; margin-bottom: 14px; }
-  .case h3 { font-family: var(--f-display); font-weight: 500; font-size: 21px; line-height: 1.2; letter-spacing: -.015em; margin: 0 0 12px; color: var(--ink); }
-  .case .problem { font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.5; margin: 0 0 12px; padding-left: 12px; border-left: 2px solid var(--accent); }
+  .case:hover { border-color: var(--ink-3); }
+  .case .case-n { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted-2); letter-spacing: .1em; margin-bottom: 13px; }
+  .case h3 { font-family: var(--f-display); font-weight: 500; font-size: 20px; line-height: 1.22; letter-spacing: -.015em; margin: 0 0 12px; color: var(--ink); }
+  .case .problem { font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.5; margin: 0 0 12px; padding-left: 12px; border-left: 2px solid var(--rule); }
   .case .did { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin: 0 0 20px; }
   .case .did b { color: var(--ink); font-weight: 600; }
   .case .outcome {
-    margin-top: auto; padding-top: 16px;
-    border-top: 1px solid var(--rule); transition: border-color .25s;
+    margin-top: auto; padding-top: 16px; border-top: 1px solid var(--rule);
     display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
   }
-  .case .outcome .num { font-family: var(--f-display); font-weight: 500; font-size: 30px; letter-spacing: -.025em; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
-  .case .outcome .num .u { font-family: var(--f-sans); font-size: .44em; color: var(--muted); margin-left: 2px; font-weight: 500; }
+  .case .outcome .num { font-family: var(--f-display); font-weight: 500; font-size: 29px; letter-spacing: -.025em; color: var(--ink); line-height: 1; font-variant-numeric: tabular-nums; }
+  .case .outcome .num .u { font-family: var(--f-sans); font-size: .44em; color: var(--muted); margin-left: 3px; font-weight: 500; }
   .case .outcome .label { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; text-align: right; line-height: 1.4; max-width: 55%; }
 
   .award-strip {
-    margin-top: 28px; padding: 16px 20px;
-    background: var(--accent-soft); border-radius: 8px;
+    margin-top: 24px; padding: 16px 20px;
+    background: var(--wash); border-radius: 8px;
     display: flex; align-items: center; gap: 13px;
     font-size: 14px; color: var(--ink-2);
-    transition: background .25s;
   }
-  .award-strip .star { font-family: var(--f-mono); font-size: 13px; color: var(--accent); font-weight: 500; letter-spacing: .04em; }
+  .award-strip .star { font-family: var(--f-mono); font-size: 13px; color: var(--ink-3); font-weight: 500; letter-spacing: .04em; flex-shrink: 0; }
   .award-strip b { color: var(--ink); font-weight: 600; }
+  .award-strip a { color: var(--accent); border-bottom: 1px solid currentColor; }
 
   /* ============================================
-     FLEX EV
+     OWNERSHIP GRID / INTRO
      ============================================ */
-  .flex-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-bottom: 40px; align-items: start; }
-  .flex-intro p { font-size: 16px; line-height: 1.6; color: var(--ink-2); margin: 0; }
-  .flex-intro p b { color: var(--ink); font-weight: 600; }
-  .flex-intro .stats-inline { display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; transition: border-color .25s; }
-  .flex-intro .stats-inline .cell { padding: 18px; border-right: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); transition: border-color .25s; }
-  .flex-intro .stats-inline .cell:nth-child(2n) { border-right: 0; }
-  .flex-intro .stats-inline .cell:nth-last-child(-n+2) { border-bottom: 0; }
-  .flex-intro .stats-inline .v { font-family: var(--f-display); font-weight: 500; font-size: 26px; line-height: 1; letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; margin-bottom: 7px; }
-  .flex-intro .stats-inline .v .u { font-family: var(--f-sans); font-size: .44em; color: var(--muted); margin-left: 3px; font-weight: 500; }
-  .flex-intro .stats-inline .k { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); letter-spacing: .06em; }
-  @media (max-width: 780px) { .flex-intro { grid-template-columns: 1fr; gap: 24px; } }
+  .block-intro { font-size: 16px; line-height: 1.6; color: var(--ink-2); margin: 0 0 26px; max-width: 72ch; }
+  .block-intro b { color: var(--ink); font-weight: 600; }
 
-  .ownership { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); border-radius: 8px; overflow: hidden; margin-bottom: 36px; transition: border-color .25s; }
-  .ownership .own { padding: 22px 22px 20px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: var(--card); transition: background .2s, border-color .25s; }
+  .ownership {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+    border-radius: 8px; overflow: hidden; margin-bottom: 24px;
+  }
+  .ownership .own {
+    padding: 22px 22px 20px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    background: var(--card); transition: background .2s;
+  }
   .ownership .own:hover { background: var(--paper-2); }
   .ownership .own .tag { font-family: var(--f-mono); font-size: 10.5px; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 9px; }
   .ownership .own h4 { font-family: var(--f-sans); font-weight: 600; font-size: 15px; line-height: 1.35; margin: 0 0 9px; color: var(--ink); }
@@ -488,179 +508,170 @@
   .ownership .own p b { color: var(--ink); font-weight: 600; }
   @media (max-width: 640px) { .ownership { grid-template-columns: 1fr; } }
 
-  .exit-note { padding: 26px 30px; background: var(--ink); color: var(--paper); border-radius: 8px; }
-  :root[data-theme="dark"] .exit-note { background: #1E1E22; border: 1px solid var(--rule); }
-  .exit-note .tag { font-family: var(--f-mono); font-size: 11px; color: var(--accent); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 13px; display: flex; align-items: center; gap: 10px; }
-  .exit-note .tag::before { content: ""; width: 18px; height: 1px; background: var(--accent); display: inline-block; }
-  .exit-note p { font-family: var(--f-display); font-weight: 400; font-style: italic; font-size: clamp(16px, 2.1vw, 21px); line-height: 1.42; letter-spacing: -.005em; margin: 0; color: #E4E1D3; }
-  :root[data-theme="dark"] .exit-note p { color: var(--ink-2); }
-  .exit-note p b { color: var(--paper); font-weight: 500; font-style: normal; }
-  :root[data-theme="dark"] .exit-note p b { color: var(--ink); }
+  .note {
+    padding: 24px 28px; background: var(--ink); color: var(--paper); border-radius: 8px;
+  }
+  :root[data-theme="dark"] .note { background: var(--paper-2); border: 1px solid var(--rule); }
+  .note .tag { font-family: var(--f-mono); font-size: 11px; color: var(--accent); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .note .tag::before { content: ""; width: 18px; height: 1px; background: var(--accent); display: inline-block; }
+  .note p { font-family: var(--f-display); font-weight: 400; font-style: italic; font-size: clamp(16px, 2vw, 20px); line-height: 1.44; margin: 0; color: #E4E1D3; }
+  :root[data-theme="dark"] .note p { color: var(--ink-2); }
+  .note p b { color: var(--paper); font-weight: 500; font-style: normal; }
+  :root[data-theme="dark"] .note p b { color: var(--ink); }
 
   /* ============================================
      HOW I THINK
      ============================================ */
-  .thoughts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
-  @media (max-width: 900px) { .thoughts { grid-template-columns: 1fr; gap: 36px; } }
-  .thought h3 { font-family: var(--f-display); font-weight: 500; font-size: 19px; line-height: 1.25; letter-spacing: -.01em; margin: 0 0 14px; color: var(--ink); padding-bottom: 13px; border-bottom: 2px solid var(--ink); transition: border-color .25s; }
+  .thoughts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+  @media (max-width: 900px) { .thoughts { grid-template-columns: 1fr; gap: 30px; } }
+  .thought h3 { font-family: var(--f-display); font-weight: 500; font-size: 19px; line-height: 1.25; letter-spacing: -.01em; margin: 0 0 14px; color: var(--ink); padding-bottom: 13px; border-bottom: 2px solid var(--ink); }
   .thought p { font-size: 14.5px; line-height: 1.65; color: var(--ink-2); margin: 0; }
   .thought p b { color: var(--ink); font-weight: 600; }
 
   /* ============================================
      LINKEDIN POSTS
      ============================================ */
-  .li-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 36px; }
+  .li-wrap { margin-top: clamp(44px, 6vh, 72px); padding-top: clamp(34px, 4vh, 52px); border-top: 1px solid var(--rule); }
+  .li-wrap h3 { font-family: var(--f-display); font-weight: 500; font-size: clamp(20px, 2.6vw, 26px); letter-spacing: -.02em; margin: 0 0 26px; color: var(--ink); }
+  .li-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
   @media (max-width: 900px) { .li-grid { grid-template-columns: 1fr; } }
-
   .li-post {
     background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
-    padding: 22px; display: flex; flex-direction: column;
-    transition: border-color .2s, transform .25s ease, box-shadow .25s ease, background .25s;
+    padding: 22px; display: flex; flex-direction: column; transition: border-color .2s;
   }
-  .li-post:hover { border-color: var(--ink-3); transform: translateY(-2px); box-shadow: 0 10px 28px -16px rgba(0,0,0,.13); }
-  :root[data-theme="dark"] .li-post:hover { box-shadow: 0 10px 28px -16px rgba(0,0,0,.45); }
+  .li-post:hover { border-color: var(--ink-3); }
   .li-post .post-date { font-family: var(--f-mono); font-size: 11px; color: var(--muted); letter-spacing: .07em; margin-bottom: 12px; }
   .li-post .post-content { font-size: 14px; line-height: 1.65; color: var(--ink-2); flex: 1; margin-bottom: 18px; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-line; }
-  .li-post .post-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 13px; border-top: 1px solid var(--rule); transition: border-color .25s; }
+  .li-post .post-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 13px; border-top: 1px solid var(--rule); }
   .li-post .post-eng { font-family: var(--f-mono); font-size: 11px; color: var(--muted); display: flex; gap: 10px; }
-  .li-post .post-link { font-family: var(--f-mono); font-size: 11px; color: var(--accent); transition: color .15s; }
-  .li-post .post-link:hover { color: var(--ink); }
+  .li-post .post-link { font-family: var(--f-mono); font-size: 11px; color: var(--accent); }
   .li-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
   .li-updated { font-family: var(--f-mono); font-size: 11px; color: var(--muted); letter-spacing: .04em; }
 
   /* ============================================
-     SIDE PROJECTS
+     PROJECT CARDS
      ============================================ */
-  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 28px; }
   @media (max-width: 780px) { .projects { grid-template-columns: 1fr; } }
   .project {
     padding: 22px 24px 20px; background: var(--card); border: 1px solid var(--rule);
-    border-radius: 8px; display: flex; flex-direction: column;
-    transition: border-color .2s, transform .2s ease, box-shadow .2s ease, background .25s;
+    border-radius: 8px; display: flex; flex-direction: column; transition: border-color .2s;
   }
-  .project:hover { border-color: var(--ink); transform: translateY(-2px); box-shadow: 0 10px 24px -16px rgba(0,0,0,.12); }
-  :root[data-theme="dark"] .project:hover { box-shadow: 0 10px 24px -16px rgba(0,0,0,.45); }
+  .project:hover { border-color: var(--ink); }
   .project .tag-row { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 13px; }
   .project .tag-row .type { color: var(--accent); }
   .project h4 { font-family: var(--f-display); font-weight: 500; font-size: 19px; line-height: 1.2; letter-spacing: -.015em; margin: 0 0 9px; color: var(--ink); }
   .project p { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); margin: 0; }
-  .project .plink { margin-top: 16px; padding-top: 13px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; font-family: var(--f-mono); font-size: 12px; color: var(--ink); transition: color .2s; }
+  .project .plink { margin-top: 16px; padding-top: 13px; min-height: 44px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; font-family: var(--f-mono); font-size: 12px; color: var(--ink); transition: color .2s; }
   .project .plink:hover { color: var(--accent); }
-  .project .plink .arr { transition: transform .2s; }
-  .project:hover .plink .arr { transform: translate(3px,-3px); }
 
   /* ============================================
      STACK
      ============================================ */
-  .stack { display: grid; grid-template-columns: 170px 1fr; gap: 14px 32px; border-top: 1px solid var(--rule); transition: border-color .25s; }
-  .stack .cat { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 20px 0 7px; border-top: 1px solid var(--rule-soft); transition: border-color .25s; }
-  .stack .cat:first-of-type { border-top: 0; }
-  .stack .items { padding: 20px 0 7px; border-top: 1px solid var(--rule-soft); font-size: 15px; line-height: 1.6; color: var(--ink); transition: border-color .25s; }
-  .stack .items:first-of-type { border-top: 0; }
+  .stack-wrap { margin-top: clamp(44px, 6vh, 72px); padding-top: clamp(30px, 4vh, 44px); border-top: 1px solid var(--rule); }
+  .stack-wrap h3 { font-family: var(--f-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .18em; color: var(--muted); margin: 0 0 22px; font-weight: 400; }
+  .stack { display: grid; grid-template-columns: 160px 1fr; gap: 0 32px; }
+  .stack .cat { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 16px 0 6px; border-top: 1px solid var(--rule-soft); }
+  .stack .cat:first-of-type { border-top: 0; padding-top: 0; }
+  .stack .items { padding: 16px 0 6px; border-top: 1px solid var(--rule-soft); font-size: 15px; line-height: 1.6; color: var(--ink); }
+  .stack .items:first-of-type { border-top: 0; padding-top: 0; }
   .stack .sep { color: var(--muted-2); margin: 0 5px; }
   @media (max-width: 640px) {
     .stack { grid-template-columns: 1fr; gap: 0; }
-    .stack .cat { padding-bottom: 0; padding-top: 20px; border-top: 1px solid var(--rule-soft); }
-    .stack .items { border-top: 0; padding-top: 7px; padding-bottom: 16px; }
+    .stack .cat { padding-bottom: 0; padding-top: 18px; border-top: 1px solid var(--rule-soft); }
+    .stack .cat:first-of-type { padding-top: 0; }
+    .stack .items { border-top: 0; padding-top: 6px; padding-bottom: 14px; }
   }
 
   /* ============================================
      CONTACT
      ============================================ */
-  .contact-wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 52px; align-items: start; }
+  .contact-wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; }
   @media (max-width: 780px) { .contact-wrap { grid-template-columns: 1fr; gap: 28px; } }
-  .contact h2 { font-family: var(--f-display); font-weight: 500; font-size: clamp(30px, 4.6vw, 50px); line-height: 1.05; letter-spacing: -.025em; margin: 0 0 22px; color: var(--ink); }
-  .contact .status { font-size: 16px; line-height: 1.6; color: var(--ink-2); margin: 0 0 32px; max-width: 46ch; }
+  .contact h2 { font-family: var(--f-display); font-weight: 500; font-size: clamp(28px, 4.4vw, 46px); line-height: 1.06; letter-spacing: -.025em; margin: 0 0 22px; color: var(--ink); }
+  .contact .status { font-size: 16px; line-height: 1.6; color: var(--ink-2); margin: 0 0 30px; max-width: 46ch; }
   .contact .status b { color: var(--ink); font-weight: 600; }
-  .contact-links { display: grid; gap: 2px; }
-  .contact-links a { padding: 16px 18px; background: var(--card); border: 1px solid var(--rule); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; transition: border-color .15s, background .15s, transform .15s; }
-  .contact-links a:hover { border-color: var(--ink); background: var(--paper-2); transform: translateX(4px); }
+  .contact-links { display: grid; gap: 8px; }
+  .contact-links a { padding: 16px 18px; min-height: 48px; background: var(--card); border: 1px solid var(--rule); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; transition: border-color .15s, background .15s; }
+  .contact-links a:hover { border-color: var(--ink); background: var(--paper-2); }
   .contact-links .lbl { font-family: var(--f-mono); font-size: 10px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
   .contact-links .val { font-size: 14.5px; color: var(--ink); font-weight: 500; }
-  .contact-links .arr { font-family: var(--f-mono); color: var(--muted); transition: color .15s, transform .2s; }
-  .contact-links a:hover .arr { color: var(--accent); transform: translate(2px,-2px); }
+  .contact-links .arr { font-family: var(--f-mono); color: var(--muted); transition: color .15s; }
+  .contact-links a:hover .arr { color: var(--accent); }
 
   /* ============================================
      FOOTER
      ============================================ */
-  footer { padding: 32px var(--pad); border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); letter-spacing: .04em; flex-wrap: wrap; gap: 10px; transition: border-color .25s; }
+  footer { padding: 30px var(--pad); border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); letter-spacing: .04em; flex-wrap: wrap; gap: 10px; }
   footer a:hover { color: var(--ink); }
-  .footer-links { display: flex; gap: 18px; }
+  .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
 
   /* ============================================
      PHOTO GRID
      ============================================ */
-  .photo-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .photo { position: relative; margin: 0; aspect-ratio: 4/3; border-radius: 8px; overflow: hidden; background: var(--paper-2); border: 1px solid var(--rule); transition: transform .25s ease, box-shadow .25s ease, border-color .2s; }
+  .photo-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .photo-grid.three { grid-template-columns: repeat(3, 1fr); }
+  .photo { position: relative; margin: 0; aspect-ratio: 4/3; border-radius: 8px; overflow: hidden; background: var(--paper-2); border: 1px solid var(--rule); }
   .photo picture { width: 100%; height: 100%; }
-  .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
-  .photo:hover { border-color: var(--ink-3); transform: translateY(-2px); box-shadow: 0 12px 24px -16px rgba(0,0,0,.15); }
-  .photo:hover img { transform: scale(1.04); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
   .photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 11px 9px; background: linear-gradient(to top, rgba(11,13,16,.72), transparent); font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em; color: #fff; opacity: 0; transition: opacity .2s; }
   .photo:hover figcaption { opacity: 1; }
-  /* Touch devices never get :hover — show the captions there instead of hiding them forever. */
   @media (hover: none) { .photo figcaption { opacity: 1; } }
-  @media (max-width: 780px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 780px) { .photo-grid, .photo-grid.three { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
 
   /* ============================================
-     BACK TO TOP
+     BACK TO TOP + PROGRESS
      ============================================ */
   .back-top {
-    position: fixed; bottom: 26px; right: 26px; z-index: 60;
-    width: 40px; height: 40px;
+    position: fixed; bottom: 24px; right: 24px; z-index: 60;
+    width: 44px; height: 44px;
     background: var(--ink); color: var(--paper);
     border: none; border-radius: 50%; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-size: 15px; opacity: 0; transform: translateY(10px);
-    transition: opacity .3s, transform .3s, background .15s;
+    font-size: 15px; opacity: 0; transform: translateY(10px); pointer-events: none;
+    transition: opacity .28s, transform .28s, background .15s;
     box-shadow: 0 4px 16px -4px rgba(0,0,0,.22);
   }
-  .back-top.visible { opacity: 1; transform: none; }
-  .back-top:hover { background: var(--accent); }
-
-  /* ============================================
-     UTILS
-     ============================================ */
-  .num-target { font-variant-numeric: tabular-nums; }
-
+  .back-top.visible { opacity: 1; transform: none; pointer-events: auto; }
+  .back-top:hover { background: var(--accent); color: #fff; }
   .scroll-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: var(--accent); z-index: 100; transition: width .08s linear; }
 
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s cubic-bezier(.2,.7,.2,1), transform .65s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+  /* ============================================
+     REVEAL — calmer than before
+     ============================================ */
+  .num-target { font-variant-numeric: tabular-nums; }
+  .reveal { opacity: 0; transform: translateY(10px); transition: opacity .5s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
-  .reveal.d1 { transition-delay: .06s; }
-  .reveal.d2 { transition-delay: .13s; }
-  .reveal.d3 { transition-delay: .20s; }
-  .reveal.d4 { transition-delay: .27s; }
+  .reveal.d1 { transition-delay: .07s; }
+  .reveal.d2 { transition-delay: .14s; }
 
   @media (prefers-reduced-motion: reduce) {
-    .reveal, .reveal.d1, .reveal.d2, .reveal.d3, .reveal.d4 { opacity: 1 !important; transform: none !important; transition: none !important; }
-    #bg-canvas { display: none; }
+    html { scroll-behavior: auto; }
+    .reveal, .reveal.d1, .reveal.d2 { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .hero .eyebrow .pulse::after { animation: none; }
   }
 </style>
 </head>
 <body>
 
-<a class="skip" href="#housing">Skip to content</a>
-<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<a class="skip" href="#about">Skip to content</a>
 <div class="scroll-progress" id="progress"></div>
 <button class="back-top" id="back-top" aria-label="Back to top">↑</button>
 
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#top" class="mark"><span class="dot"></span>akash.chaurasia</a>
+    <a href="#about" class="mark"><span class="dot"></span>akash.chaurasia</a>
     <ul>
-      <li><a href="#housing">Housing.com</a></li>
-      <li><a href="#flex">Flex EV</a></li>
-      <li><a href="#pinnacle">Pinnacle</a></li>
-      <li><a href="#brokerboost">BrokerBoost</a></li>
-      <li><a href="#think">How I think</a></li>
-      <li><a href="#writing">Writing</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#thinking">Thinking</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-right">
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-        <span id="theme-icon">☀️</span>
+        <span id="theme-icon">☀</span>
         <span id="theme-label">Dark</span>
       </button>
       <a class="cta" href="mailto:mkchaurasia05@gmail.com">Email →</a>
@@ -671,17 +682,16 @@
   </div>
 </nav>
 
+<div class="rail" id="rail" aria-hidden="true">About</div>
+
 <!-- Mobile menu -->
 <div class="mobile-menu" id="mobile-menu" aria-label="Navigation">
   <nav>
-    <a href="#housing" class="ml">Housing.com <span class="arr">→</span></a>
-    <a href="#flex"    class="ml">Flex EV <span class="arr">→</span></a>
-    <a href="#pinnacle"class="ml">Pinnacle <span class="arr">→</span></a>
-    <a href="#brokerboost" class="ml">BrokerBoost <span class="arr">→</span></a>
-    <a href="#think"   class="ml">How I think <span class="arr">→</span></a>
-    <a href="#writing" class="ml">Writing <span class="arr">→</span></a>
-    <a href="#stack"   class="ml">Stack <span class="arr">→</span></a>
-    <a href="#contact" class="ml">Contact <span class="arr">→</span></a>
+    <a href="#about"    class="ml">About <span class="arr">→</span></a>
+    <a href="#work"     class="ml">Work <span class="arr">→</span></a>
+    <a href="#projects" class="ml">Projects <span class="arr">→</span></a>
+    <a href="#thinking" class="ml">Thinking <span class="arr">→</span></a>
+    <a href="#contact"  class="ml">Contact <span class="arr">→</span></a>
   </nav>
   <div class="mobile-ctas">
     <a class="btn" href="mailto:mkchaurasia05@gmail.com">Email me ↗</a>
@@ -689,14 +699,16 @@
   </div>
   <div class="m-theme">
     <button class="theme-toggle" id="theme-toggle-m" aria-label="Toggle dark mode">
-      <span id="theme-icon-m">☀️</span>
+      <span id="theme-icon-m">☀</span>
       <span id="theme-label-m">Dark mode</span>
     </button>
   </div>
 </div>
 
-<!-- HERO -->
-<section class="hero" id="top">
+<main>
+
+<!-- ============ ABOUT ============ -->
+<section class="hero" id="about" data-bucket="About">
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-intro">
@@ -714,7 +726,7 @@
       </div>
     </div>
 
-    <div class="stats" style="margin-top: 44px;">
+    <div class="stats">
       <div class="stat">
         <div class="v">₹<span class="num-target" data-count="3.5" data-decimals="1">0.0</span><span class="u">Cr / mo</span></div>
         <div class="k">Meta + Google spend managed</div>
@@ -730,270 +742,269 @@
     </div>
 
     <div class="cta-row">
-      <a class="btn" href="#housing">Read my work <span class="arr">↓</span></a>
+      <a class="btn" href="#work">See the work <span class="arr">↓</span></a>
       <a class="btn ghost" href="mailto:mkchaurasia05@gmail.com">Email me <span class="arr">↗</span></a>
     </div>
-  </div>
-</section>
 
-<!-- HOUSING.COM -->
-<section id="housing">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">01 — Current</div>
-      <h2>Housing.com — building the machine, then scaling it.</h2>
-    </div>
-    <div class="work-meta">
-      <div class="role">Growth Associate · <span class="co">Housing.com</span></div>
-      <div class="period">Jan 2024 — Present</div>
-    </div>
-    <div class="cases">
-      <article class="case reveal">
-        <div class="case-n">CASE 01 · MEASUREMENT</div>
-        <h3>The incrementality framework that found ₹10L/month we didn't need to spend.</h3>
-        <p class="problem">Budget allocation running on last-click and gut calls.</p>
-        <p class="did">Built the cross-city testing framework Housing.com now uses to measure <b>true campaign lift</b> and cost per incremental lead, across <b>12 markets</b>. A geo-holdout in Chennai surfaced <b>₹10L/month</b> of non-incremental spend — roughly <b>₹80L/quarter</b> at full scale.</p>
-        <div class="outcome">
-          <div class="num">₹10L<span class="u">/ month</span></div>
-          <div class="label">non-incremental spend found</div>
-        </div>
-      </article>
-      <article class="case reveal d1">
-        <div class="case-n">CASE 02 · AI CREATIVE</div>
-        <h3>An AI creative engine — and a quality gate that runs at auction time.</h3>
-        <p class="problem">Bad property images slipping into live campaigns, week after week.</p>
-        <p class="did">Shipped <b>15,000 videos</b> through Kling AI and Veo 3 and <b>30,000 enhanced images</b>. Built a runtime ML scoring model with the Data Science team that strips non-marketable creative from the feed before it serves, and expanded into Reels and Stories.</p>
-        <div class="outcome">
-          <div class="num">80<span class="u">% ↓</span></div>
-          <div class="label">bad-image escalations</div>
-        </div>
-      </article>
-      <article class="case reveal d2">
-        <div class="case-n">CASE 03 · TRACKING &amp; DATA QUALITY</div>
-        <h3>Rebuilt the catalog feed: 18% → 90%+ match rate.</h3>
-        <p class="problem">Campaigns optimising on broken signal — most of the catalog never matched.</p>
-        <p class="did">Stripped irrelevant Meta Pixel and FB SDK parameters, added an <b>hourly out-of-stock cron</b>, and enriched property params. Fixed an <b>18% city-mismatch</b> rate in the same pass.</p>
-        <div class="outcome">
-          <div class="num">+10<span class="u">% CTR</span></div>
-          <div class="label">QoQ · CVR +5%</div>
-        </div>
-      </article>
-      <article class="case reveal d3">
-        <div class="case-n">CASE 04 · LEAD QUALITY</div>
-        <h3>CAPI wired into CRM, so bids optimise on qualified leads.</h3>
-        <p class="problem">No per-channel × campaign view of what a good lead actually looked like.</p>
-        <p class="did">Connected <b>CAPI for Leadgen</b> to CRM and dialer signals, then moved optimisation onto the <b>call-connected lead</b> rather than the raw form submit.</p>
-        <div class="outcome">
-          <div class="num">9<span class="u">% ↓</span></div>
-          <div class="label">cost per qualified lead · Mumbai &amp; Noida</div>
-        </div>
-      </article>
-      <article class="case reveal">
-        <div class="case-n">CASE 05 · AUTOMATION</div>
-        <h3>Built the CRM behind a 5-person lead-generation desk.</h3>
-        <p class="problem">Callers working manual lists, with no view of agent productivity.</p>
-        <p class="did">Built the CRM and the automation layer around it for a <b>5-person lead-generation calling team</b> — the work that won the first SPOTLIGHT award.</p>
-        <div class="outcome">
-          <div class="num">₹2L<span class="u">/ month</span></div>
-          <div class="label">agent productivity saved</div>
-        </div>
-      </article>
-      <article class="case reveal d1">
-        <div class="case-n">CASE 06 · PAID MEDIA</div>
-        <h3>Scaled Meta + Google from ₹1.5 Cr → ₹3.5 Cr/mo, 12 → 36 cities.</h3>
-        <p class="problem">A fragmented 180-campaign account starved of learning volume.</p>
-        <p class="did">Restructured <b>180 → 100 campaigns</b> into PAN-India, city-cluster and city tiers, and shifted bidding from Highest Volume to <b>tCPA</b> under SOP-led governance. <b>CPL −5% QoQ</b>, CPM flat YoY against an industry that rose ~5%, affiliate share <b>6% → 9%</b>.</p>
-        <div class="outcome">
-          <div class="num">15<span class="u">% ↓</span></div>
-          <div class="label">CPV, while spend grew 2.3×</div>
-        </div>
-      </article>
-    </div>
-    <div class="award-strip reveal">
-      <span class="star">★ ★</span>
-      <div><b>2× SPOTLIGHT Quarter Award</b> — one for building the CRM, one for the campaign restructure and the Kling AI creative engine. <b>Martech AI Awards winner</b> with the Housing.com team.</div>
-    </div>
-    <div class="photo-grid reveal" style="grid-template-columns: repeat(3, 1fr);">
-      <figure class="photo"><picture><source srcset="photos/housing/martech-awards.webp" type="image/webp"><img src="photos/housing/martech-awards.jpeg" alt="Martech AI Awards" width="800" height="642" loading="lazy" decoding="async"></picture><figcaption>Martech AI Awards · Winner</figcaption></figure>
-      <figure class="photo"><picture><source srcset="photos/housing/team-1.webp" type="image/webp"><img src="photos/housing/team-1.jpeg" alt="Housing.com team" width="800" height="565" loading="lazy" decoding="async"></picture><figcaption>The team</figcaption></figure>
-      <figure class="photo"><picture><source srcset="photos/housing/team-2.webp" type="image/webp"><img src="photos/housing/team-2.jpeg" alt="Housing.com team" width="800" height="565" loading="lazy" decoding="async"></picture><figcaption>The team</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<!-- FLEX EV -->
-<section id="flex">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">02 — Operator</div>
-      <h2>Flex EV — co-founded, scaled, exited.</h2>
-    </div>
-    <div class="work-meta">
-      <div class="role">Co-Founder · <span class="co">Flex EV</span> · B2B2C EV rental, Delhi NCR</div>
-      <div class="period">Dec 2024 — Oct 2025</div>
-    </div>
-    <div class="flex-intro reveal">
-      <p>Co-founded a <b>B2B2C EV rental business</b> for gig delivery riders in Delhi NCR. Scaled to <b>500+ vehicles</b> and <b>₹40L MRR</b> in 12 months at <b>86% utilisation</b> — while holding a full-time role at Housing.com. Stepped back in October 2025.</p>
-      <div class="stats-inline">
-        <div class="cell"><div class="v"><span class="num-target" data-count="500">0</span>+</div><div class="k">Vehicles on road</div></div>
-        <div class="cell"><div class="v">₹<span class="num-target" data-count="40">0</span>L<span class="u">MRR</span></div><div class="k">Reached in 12 months</div></div>
-        <div class="cell"><div class="v"><span class="num-target" data-count="86">0</span>%</div><div class="k">Fleet utilisation</div></div>
-        <div class="cell"><div class="v">2 → <span class="num-target" data-count="30">0</span></div><div class="k">Team, across 3 hubs</div></div>
-      </div>
-    </div>
-    <div class="ownership reveal">
-      <div class="own"><div class="tag">OPS</div><h4>End-to-end ops from scratch.</h4><p>Rider onboarding, collections, recovery, maintenance. <b>1 → 3 hubs</b>, <b>2 → 30 team</b>.</p></div>
-      <div class="own"><div class="tag">FINANCE</div><h4>Payment &amp; KYC automation.</h4><p>Replaced manual QR collections with <b>Easebuzz bulk payment links</b> and automated rider KYC through <b>Leegality</b>. Cleaned up reconciliation, cut leakage.</p></div>
-      <div class="own"><div class="tag">PRODUCT</div><h4>Sheets and Apps Script → a real platform.</h4><p>Started the whole operation on Google Sheets, GForms and Apps Script, then rebuilt it as an in-house <b>Fleet Management Platform</b> and Rider App for rent tracking, dues and asset visibility.</p></div>
-      <div class="own"><div class="tag">TELEMATICS</div><h4>In-vehicle IoT into the fleet platform.</h4><p>Piped third-party in-vehicle IoT and webhooks into our own platform for <b>remote immobilisation</b> and theft prevention.</p></div>
-      <div class="own"><div class="tag">DEMAND · GTM</div><h4>Demand partnerships with Uber, Zepto and Porter.</h4><p>Cold outreach → commercial close across three delivery platforms, plus OEM and battery-swap supply deals.</p></div>
-      <div class="own"><div class="tag">LEADERSHIP</div><h4>Built the operating layer.</h4><p>Hired the first hub managers. Wrote the SOPs for collections, recovery, redeployment.</p></div>
-    </div>
-    <div class="exit-note reveal">
-      <div class="tag">On the exit</div>
-      <p>Stepped back in October 2025 after a <b>structural disagreement on operating discipline</b> with my co-founder — foundations before scale. Took the lessons; took the operator scars.</p>
-    </div>
-    <div class="photo-grid reveal">
-      <figure class="photo"><picture><source srcset="photos/flexev/co-founder-fleet.webp" type="image/webp"><img src="photos/flexev/co-founder-fleet.jpeg" alt="With co-founder at the fleet hub" width="562" height="1000" loading="lazy" decoding="async"></picture><figcaption>With co-founder · fleet hub</figcaption></figure>
-      <figure class="photo"><picture><source srcset="photos/flexev/fleet-2.webp" type="image/webp"><img src="photos/flexev/fleet-2.jpeg" alt="Flex EV fleet" width="800" height="600" loading="lazy" decoding="async"></picture><figcaption>On the ground</figcaption></figure>
-      <figure class="photo"><picture><source srcset="photos/flexev/fleet-3.webp" type="image/webp"><img src="photos/flexev/fleet-3.jpeg" alt="Flex EV operations" width="800" height="897" loading="lazy" decoding="async"></picture><figcaption>Ops</figcaption></figure>
-      <figure class="photo"><picture><source srcset="photos/flexev/fleet-4.webp" type="image/webp"><img src="photos/flexev/fleet-4.jpeg" alt="Flex EV fleet" width="800" height="437" loading="lazy" decoding="async"></picture><figcaption>The fleet</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<!-- PINNACLE -->
-<section id="pinnacle">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">03 — Foundations</div>
-      <h2>Pinnacle Infotech — where I learned to build with data.</h2>
-    </div>
-    <div class="work-meta">
-      <div class="role">Product Manager · <span class="co">Pinnacle Infotech</span> · R&amp;D · Jaipur</div>
-      <div class="period">Jun 2023 — Dec 2023</div>
-    </div>
-    <p class="reveal" style="font-size:16px;line-height:1.6;color:var(--ink-2);font-style:italic;max-width:72ch;margin:0 0 32px;">My first role out of IIT KGP — and Pinnacle's first-ever PM, in their R&amp;D wing. A BIM engineering firm running ~500 live projects for international clients. I helped take its reporting from on-prem Excel to a production data platform on AWS.</p>
-    <div class="cases">
-      <article class="case reveal">
-        <div class="case-n">CASE 01 · DATA PLATFORM</div>
-        <h3>Co-built Pinnacle's BI platform on AWS, from zero.</h3>
-        <p class="problem">Dashboards running straight off live production databases — slow loads, constant engineering drag.</p>
-        <p class="did">Shipped a cloud BI stack on <b>AWS S3 + Glue + Athena + QuickSight</b> and migrated <b>6+ dashboards</b> off on-prem, then specified a natural-language chatbot that turns plain-English questions into charts on the same warehouse. Gave engineering back <b>6 man-hours a week</b>.</p>
-        <p style="font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;margin:0 0 16px;"><a href="https://aws.amazon.com/blogs/business-intelligence/pinnacle-infotechs-pioneering-business-intelligence-strategy-takes-off-with-amazon-quicksight/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor;">Co-authored the AWS blog on this&nbsp;work&nbsp;↗</a></p>
-        <div class="outcome"><div class="num">75<span class="u">% ↓</span></div><div class="label">dashboard load time</div></div>
-      </article>
-      <article class="case reveal d1">
-        <div class="case-n">CASE 02 · TALENT INTELLIGENCE</div>
-        <h3>Talent Tracking System for 3,000+ engineers.</h3>
-        <p class="problem">Project staffing made on tribal knowledge across a global engineering org.</p>
-        <p class="did">Built a feature store and shipped a <b>Talent Tracking System</b> to match engineers to projects, surface hiring gaps and plan training. Resource allocation went from <b>3–4 days to hours</b>.</p>
-        <div class="outcome"><div class="num">3K+<span class="u">engineers</span></div><div class="label">allocation: days → hours</div></div>
-      </article>
-      <article class="case reveal d2">
-        <div class="case-n">CASE 03 · CLIENT DESK GROWTH</div>
-        <h3>Drove 70%+ DAU lift on the client portal.</h3>
-        <p class="problem">Client Desk had low adoption among 400 named accounts.</p>
-        <p class="did">Led the activation campaign, reworked onboarding. <b>DAU grew 70%+ QoQ</b>; onboarded <b>98 of 400 clients</b> in a single month.</p>
-        <div class="outcome"><div class="num">70%+<span class="u">DAU</span></div><div class="label">QoQ growth</div></div>
-      </article>
-    </div>
-    <div class="award-strip reveal">
-      <span class="star">★</span>
-      <div><b>AWS Recognition</b> — Co-authored the official <a href="https://aws.amazon.com/blogs/business-intelligence/pinnacle-infotechs-pioneering-business-intelligence-strategy-takes-off-with-amazon-quicksight/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor;">AWS Business Intelligence blog</a> on Pinnacle's QuickSight rollout, published 13 Dec 2023.</div>
-    </div>
-    <div class="photo-grid reveal" style="grid-template-columns:repeat(3,1fr);">
-      <figure class="photo"><picture><source srcset="photos/pinnacle/team-1.webp" type="image/webp"><img src="photos/pinnacle/team-1.jpeg" alt="Pinnacle Infotech team" width="800" height="600" loading="lazy" decoding="async"></picture><figcaption>Pinnacle Infotech · Jaipur</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<!-- BROKERBOOST -->
-<section id="brokerboost">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">04 — Product</div>
-      <h2>BrokerBoost — a product scoped end to end.</h2>
-    </div>
-    <div class="work-meta">
-      <div class="role">Self-initiated · <span class="co">BrokerBoost</span> · Real-estate broker SaaS</div>
-      <div class="period">Concept · 12-slide deck</div>
-    </div>
-    <div class="flex-intro reveal">
-      <p>Indian brokers fight over a shrinking pool of portal leads, then struggle to find the right inventory once a buyer is finally in hand. <b>Solving demand alone is a feature. Solving supply alone is a feature.</b> BrokerBoost resolves both sides of the same transaction — a broker runs their own campaigns from one console, and when a buyer turns up, a co-broking handshake surfaces matching listings across the network in seconds.</p>
-      <div class="stats-inline">
-        <div class="cell"><div class="v">3</div><div class="k">Broker tiers, mid as beachhead</div></div>
-        <div class="cell"><div class="v">4</div><div class="k">Revenue streams modelled</div></div>
-        <div class="cell"><div class="v">12</div><div class="k">Slides, market → roadmap</div></div>
-        <div class="cell"><div class="v">95<span class="u">% GM</span></div><div class="k">On the network layer</div></div>
-      </div>
-    </div>
-    <div class="ownership reveal">
-      <div class="own"><div class="tag">ACQUISITION</div><h4>Messaging — WhatsApp &amp; SMS.</h4><p>Blasts to the broker's own lead lists at <b>₹2/msg</b>, top-up credits, no lock-in. Telco pass-through pricing, ~50% margin.</p></div>
-      <div class="own"><div class="tag">ACQUISITION</div><h4>Meta campaigns from the console.</h4><p>Auto-creative and targeting at <b>₹240 / 1K impressions</b>. Media passes through; the margin sits in the layer above it.</p></div>
-      <div class="own"><div class="tag">STICKINESS</div><h4>AI creative.</h4><p>Auto-generated listing brochures, reels and broker brand kits at <b>₹199/pack</b> — margin expands as model costs fall.</p></div>
-      <div class="own"><div class="tag">★ THE ENGINE</div><h4>Broker Connect — the co-broking rail.</h4><p>A <b>₹200-a-side handshake</b> matching one broker's buyer to another's inventory. Pure software, bilateral lock-in, <b>~95% gross margin</b>.</p></div>
-      <div class="own"><div class="tag">SEGMENTATION</div><h4>Beachhead chosen, not assumed.</h4><p>Premium brokers already buy portal packages; volume brokers spend ~₹1K/month. The <b>mid tier</b> is the wedge — digital enough to adopt, under-served enough to care.</p></div>
-      <div class="own"><div class="tag">UNIT ECONOMICS</div><h4>Defended against the obvious objection.</h4><p>Modelled <b>revenue per lead</b> channel by channel against the portal's own — the deck answers "doesn't this cannibalise us?" with arithmetic rather than assertion.</p></div>
-    </div>
-    <div class="exit-note reveal">
-      <div class="tag">Worth being clear about</div>
-      <p>This is a <b>concept deck, not a shipped product</b> — the market sizes, pricing and three-year trajectory in it are modelled, not measured. What it demonstrates is the reasoning: segmentation, wedge selection, revenue architecture, unit economics and an engineering roadmap, argued end to end.</p>
-    </div>
-    <div style="margin-top:28px;display:flex;gap:10px;flex-wrap:wrap;">
-      <a class="btn" href="/Brokerboost/" target="_blank" rel="noopener">Open the deck <span class="arr">↗</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- HOW I THINK -->
-<section id="think">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">05 — Views</div>
-      <h2>How I think about growth.</h2>
-    </div>
-    <div class="thoughts">
-      <div class="thought reveal">
-        <h3>On measurement vs. attribution</h3>
-        <p>Attribution tells you which pipe the water came out of. <b>Incrementality tells you if you needed the pipe.</b> Once you've run a geo-holdout, watched a channel go dark, and found <b>₹10L a month</b> the business never missed, you stop arguing about last-click.</p>
-      </div>
-      <div class="thought reveal d1">
-        <h3>On AI in performance marketing</h3>
-        <p>Most "AI in marketing" posts are prompt libraries. The real wins are boring: <b>scoring creative before it ships</b>, generating 15K variants when you'd previously brief 15. Hype is on image generation; leverage is on the filter that runs after.</p>
-      </div>
-      <div class="thought reveal d2">
-        <h3>On building vs. operating</h3>
-        <p>Most growth roles hand you a machine and ask you to turn the dial. The interesting work is <b>upstream of the dial</b> — the feed, the signal, the measurement. Fix those and the dial starts working; skip them and you're optimising noise. I'd rather own the thing end to end than tune someone else's.</p>
+    <div class="stack-wrap reveal">
+      <h3>Tools I actually use</h3>
+      <div class="stack">
+        <div class="cat">Channels</div>
+        <div class="items">Meta <span class="sep">·</span> Google <span class="sep">·</span> Criteo <span class="sep">·</span> Taboola <span class="sep">·</span> RTB <span class="sep">·</span> Branch <span class="sep">·</span> Appsflyer</div>
+        <div class="cat">Measurement</div>
+        <div class="items">GA4 <span class="sep">·</span> Tableau <span class="sep">·</span> GTM <span class="sep">·</span> MoEngage <span class="sep">·</span> CAPI <span class="sep">·</span> AEM</div>
+        <div class="cat">Data</div>
+        <div class="items">SQL <span class="sep">·</span> PySpark <span class="sep">·</span> Postgres <span class="sep">·</span> AWS Glue / Athena <span class="sep">·</span> Quicksight</div>
+        <div class="cat">AI &amp; Automation</div>
+        <div class="items">Claude <span class="sep">·</span> ChatGPT <span class="sep">·</span> Gemini <span class="sep">·</span> Kling <span class="sep">·</span> Veo 3 <span class="sep">·</span> Zapier <span class="sep">·</span> Apps Script</div>
+        <div class="cat">Languages</div>
+        <div class="items">Python <span class="sep">·</span> SQL <span class="sep">·</span> C++</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- LINKEDIN POSTS — auto-updated via GitHub Action + Zapier -->
-<section id="writing">
+<!-- ============ WORK ============ -->
+<section id="work" data-bucket="Work">
   <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">06 — Writing</div>
-      <h2>Thinking out loud on LinkedIn.</h2>
+    <div class="bucket-head reveal">
+      <div class="tag">Work</div>
+      <h2>Three seats, three kinds of growth.</h2>
+      <p>Headlines first. Open any one of them for the cases, the numbers and how it was actually done.</p>
     </div>
-    <div id="li-posts" class="li-grid">
-      <p style="font-family:var(--f-mono);font-size:13px;color:var(--muted);padding:32px 0;">Loading posts…</p>
-    </div>
-    <div class="li-footer reveal">
-      <span class="li-updated" id="li-updated"></span>
-      <a class="btn ghost" href="https://linkedin.com/in/akashchaurasia05/" target="_blank" rel="noopener">All posts on LinkedIn <span class="arr">↗</span></a>
-    </div>
+
+    <!-- HOUSING -->
+    <details class="role-block reveal" id="housing">
+      <summary>
+        <div class="rb-head">
+          <div class="rb-title">
+            <h3>Housing.com</h3>
+            <div class="rb-meta">Growth Associate · Jan 2024 — Present</div>
+          </div>
+          <div class="rb-toggle"><span class="lbl-closed">Six cases</span><span class="lbl-open">Close</span><span class="rb-chev">⌄</span></div>
+        </div>
+        <p class="rb-line">Built the measurement and creative systems first — then scaled spend on top of them. <b>2× SPOTLIGHT Quarter Award.</b></p>
+        <div class="rb-stats">
+          <div class="s"><div class="v">₹3.5<span class="u">Cr / mo</span></div><div class="k">Meta + Google spend</div></div>
+          <div class="s"><div class="v">₹10L<span class="u">/ month</span></div><div class="k">Non-incremental spend found</div></div>
+          <div class="s"><div class="v">18 → 90<span class="u">%+</span></div><div class="k">Catalog match rate</div></div>
+        </div>
+      </summary>
+      <div class="rb-body">
+        <div class="cases">
+          <article class="case">
+            <div class="case-n">CASE 01 · MEASUREMENT</div>
+            <h3>The incrementality framework that found ₹10L/month we didn't need to spend.</h3>
+            <p class="problem">Budget allocation running on last-click and gut calls.</p>
+            <p class="did">Built the cross-city testing framework Housing.com now uses to measure <b>true campaign lift</b> and cost per incremental lead, across <b>12 markets</b>. A geo-holdout in Chennai surfaced <b>₹10L/month</b> of non-incremental spend — roughly <b>₹80L/quarter</b> at full scale.</p>
+            <div class="outcome">
+              <div class="num">₹10L<span class="u">/ month</span></div>
+              <div class="label">non-incremental spend found</div>
+            </div>
+          </article>
+          <article class="case">
+            <div class="case-n">CASE 02 · AI CREATIVE</div>
+            <h3>An AI creative engine — and a quality gate that runs at auction time.</h3>
+            <p class="problem">Bad property images slipping into live campaigns, week after week.</p>
+            <p class="did">Shipped <b>15,000 videos</b> through Kling AI and Veo 3 and <b>30,000 enhanced images</b>. Built a runtime ML scoring model with the Data Science team that strips non-marketable creative from the feed before it serves, and expanded into Reels and Stories.</p>
+            <div class="outcome">
+              <div class="num">80<span class="u">% ↓</span></div>
+              <div class="label">bad-image escalations</div>
+            </div>
+          </article>
+          <article class="case">
+            <div class="case-n">CASE 03 · TRACKING &amp; DATA QUALITY</div>
+            <h3>Rebuilt the catalog feed: 18% → 90%+ match rate.</h3>
+            <p class="problem">Campaigns optimising on broken signal — most of the catalog never matched.</p>
+            <p class="did">Stripped irrelevant Meta Pixel and FB SDK parameters, added an <b>hourly out-of-stock cron</b>, and enriched property params. Fixed an <b>18% city-mismatch</b> rate in the same pass.</p>
+            <div class="outcome">
+              <div class="num">+10<span class="u">% CTR</span></div>
+              <div class="label">QoQ · CVR +5%</div>
+            </div>
+          </article>
+          <article class="case">
+            <div class="case-n">CASE 04 · LEAD QUALITY</div>
+            <h3>CAPI wired into CRM, so bids optimise on qualified leads.</h3>
+            <p class="problem">No per-channel × campaign view of what a good lead actually looked like.</p>
+            <p class="did">Connected <b>CAPI for Leadgen</b> to CRM and dialer signals, then moved optimisation onto the <b>call-connected lead</b> rather than the raw form submit.</p>
+            <div class="outcome">
+              <div class="num">9<span class="u">% ↓</span></div>
+              <div class="label">cost per qualified lead · Mumbai &amp; Noida</div>
+            </div>
+          </article>
+          <article class="case">
+            <div class="case-n">CASE 05 · AUTOMATION</div>
+            <h3>Built the CRM behind a 5-person lead-generation desk.</h3>
+            <p class="problem">Callers working manual lists, with no view of agent productivity.</p>
+            <p class="did">Built the CRM and the automation layer around it for a <b>5-person lead-generation calling team</b> — the work that won the first SPOTLIGHT award.</p>
+            <div class="outcome">
+              <div class="num">₹2L<span class="u">/ month</span></div>
+              <div class="label">agent productivity saved</div>
+            </div>
+          </article>
+          <article class="case">
+            <div class="case-n">CASE 06 · PAID MEDIA</div>
+            <h3>Scaled Meta + Google from ₹1.5 Cr → ₹3.5 Cr/mo, 12 → 36 cities.</h3>
+            <p class="problem">A fragmented 180-campaign account starved of learning volume.</p>
+            <p class="did">Restructured <b>180 → 100 campaigns</b> into PAN-India, city-cluster and city tiers, and shifted bidding from Highest Volume to <b>tCPA</b> under SOP-led governance. <b>CPL −5% QoQ</b>, CPM flat YoY against an industry that rose ~5%, affiliate share <b>6% → 9%</b>.</p>
+            <div class="outcome">
+              <div class="num">15<span class="u">% ↓</span></div>
+              <div class="label">CPV, while spend grew 2.3×</div>
+            </div>
+          </article>
+        </div>
+        <div class="award-strip">
+          <span class="star">★ ★</span>
+          <div><b>2× SPOTLIGHT Quarter Award</b> — one for building the CRM, one for the campaign restructure and the Kling AI creative engine. <b>Martech AI Awards winner</b> with the Housing.com team.</div>
+        </div>
+        <div class="photo-grid three">
+          <figure class="photo"><picture><source srcset="photos/housing/martech-awards.webp" type="image/webp"><img src="photos/housing/martech-awards.jpeg" alt="Martech AI Awards" width="800" height="642" loading="lazy" decoding="async"></picture><figcaption>Martech AI Awards · Winner</figcaption></figure>
+          <figure class="photo"><picture><source srcset="photos/housing/team-1.webp" type="image/webp"><img src="photos/housing/team-1.jpeg" alt="Housing.com team" width="800" height="565" loading="lazy" decoding="async"></picture><figcaption>The team</figcaption></figure>
+          <figure class="photo"><picture><source srcset="photos/housing/team-2.webp" type="image/webp"><img src="photos/housing/team-2.jpeg" alt="Housing.com team" width="800" height="565" loading="lazy" decoding="async"></picture><figcaption>The team</figcaption></figure>
+        </div>
+      </div>
+    </details>
+
+    <!-- FLEX EV -->
+    <details class="role-block reveal" id="flex">
+      <summary>
+        <div class="rb-head">
+          <div class="rb-title">
+            <h3>Flex EV</h3>
+            <div class="rb-meta">Co-Founder · B2B2C EV rental, Delhi NCR · Dec 2024 — Oct 2025</div>
+          </div>
+          <div class="rb-toggle"><span class="lbl-closed">What I owned</span><span class="lbl-open">Close</span><span class="rb-chev">⌄</span></div>
+        </div>
+        <p class="rb-line">Co-founded an EV rental business for gig delivery riders, and ran it <b>alongside a full-time role</b>. Built the ops, the platform and the P&amp;L.</p>
+        <div class="rb-stats">
+          <div class="s"><div class="v">500<span class="u">+ vehicles</span></div><div class="k">On the road</div></div>
+          <div class="s"><div class="v">₹40L<span class="u">MRR</span></div><div class="k">Reached in 12 months</div></div>
+          <div class="s"><div class="v">86<span class="u">%</span></div><div class="k">Fleet utilisation</div></div>
+        </div>
+      </summary>
+      <div class="rb-body">
+        <p class="block-intro">Co-founded a <b>B2B2C EV rental business</b> for gig delivery riders in Delhi NCR. Scaled to <b>500+ vehicles</b> and <b>₹40L MRR</b> in 12 months at <b>86% utilisation</b> — while holding a full-time role at Housing.com. Stepped back in October 2025.</p>
+        <div class="ownership">
+          <div class="own"><div class="tag">OPS</div><h4>End-to-end ops from scratch.</h4><p>Rider onboarding, collections, recovery, maintenance. <b>1 → 3 hubs</b>, <b>2 → 30 team</b>.</p></div>
+          <div class="own"><div class="tag">FINANCE</div><h4>Payment &amp; KYC automation.</h4><p>Replaced manual QR collections with <b>Easebuzz bulk payment links</b> and automated rider KYC through <b>Leegality</b>. Cleaned up reconciliation, cut leakage.</p></div>
+          <div class="own"><div class="tag">PRODUCT</div><h4>Sheets and Apps Script → a real platform.</h4><p>Started the whole operation on Google Sheets, GForms and Apps Script, then rebuilt it as an in-house <b>Fleet Management Platform</b> and Rider App for rent tracking, dues and asset visibility.</p></div>
+          <div class="own"><div class="tag">TELEMATICS</div><h4>In-vehicle IoT into the fleet platform.</h4><p>Piped third-party in-vehicle IoT and webhooks into our own platform for <b>remote immobilisation</b> and theft prevention.</p></div>
+          <div class="own"><div class="tag">DEMAND · GTM</div><h4>Demand partnerships with Uber, Zepto and Porter.</h4><p>Cold outreach → commercial close across three delivery platforms, plus OEM and battery-swap supply deals.</p></div>
+          <div class="own"><div class="tag">LEADERSHIP</div><h4>Built the operating layer.</h4><p>Hired the first hub managers. Wrote the SOPs for collections, recovery, redeployment.</p></div>
+        </div>
+        <div class="note">
+          <div class="tag">On the exit</div>
+          <p>Stepped back in October 2025 after a <b>structural disagreement on operating discipline</b> with my co-founder — foundations before scale. Took the lessons; took the operator scars.</p>
+        </div>
+        <div class="photo-grid">
+          <figure class="photo"><picture><source srcset="photos/flexev/co-founder-fleet.webp" type="image/webp"><img src="photos/flexev/co-founder-fleet.jpeg" alt="With co-founder at the fleet hub" width="562" height="1000" loading="lazy" decoding="async"></picture><figcaption>With co-founder · fleet hub</figcaption></figure>
+          <figure class="photo"><picture><source srcset="photos/flexev/fleet-2.webp" type="image/webp"><img src="photos/flexev/fleet-2.jpeg" alt="Flex EV fleet" width="800" height="600" loading="lazy" decoding="async"></picture><figcaption>On the ground</figcaption></figure>
+          <figure class="photo"><picture><source srcset="photos/flexev/fleet-3.webp" type="image/webp"><img src="photos/flexev/fleet-3.jpeg" alt="Flex EV operations" width="800" height="897" loading="lazy" decoding="async"></picture><figcaption>Ops</figcaption></figure>
+          <figure class="photo"><picture><source srcset="photos/flexev/fleet-4.webp" type="image/webp"><img src="photos/flexev/fleet-4.jpeg" alt="Flex EV fleet" width="800" height="437" loading="lazy" decoding="async"></picture><figcaption>The fleet</figcaption></figure>
+        </div>
+      </div>
+    </details>
+
+    <!-- PINNACLE -->
+    <details class="role-block reveal" id="pinnacle">
+      <summary>
+        <div class="rb-head">
+          <div class="rb-title">
+            <h3>Pinnacle Infotech</h3>
+            <div class="rb-meta">Product Manager · R&amp;D · Jaipur · Jun 2023 — Dec 2023</div>
+          </div>
+          <div class="rb-toggle"><span class="lbl-closed">Three cases</span><span class="lbl-open">Close</span><span class="rb-chev">⌄</span></div>
+        </div>
+        <p class="rb-line">Their <b>first-ever PM</b>, out of IIT KGP. Took reporting from on-prem Excel to a production data platform on AWS — and <b>co-authored the AWS blog</b> about it.</p>
+        <div class="rb-stats">
+          <div class="s"><div class="v">3K<span class="u">+ engineers</span></div><div class="k">On the talent system</div></div>
+          <div class="s"><div class="v">75<span class="u">% ↓</span></div><div class="k">Dashboard load time</div></div>
+          <div class="s"><div class="v">AWS<span class="u">published</span></div><div class="k">Named co-author, Dec 2023</div></div>
+        </div>
+      </summary>
+      <div class="rb-body">
+        <p class="block-intro">My first role out of IIT KGP — and Pinnacle's first-ever PM, in their R&amp;D wing. A BIM engineering firm running ~500 live projects for international clients. I helped take its reporting from on-prem Excel to a production data platform on AWS.</p>
+        <div class="cases">
+          <article class="case">
+            <div class="case-n">CASE 01 · DATA PLATFORM</div>
+            <h3>Co-built Pinnacle's BI platform on AWS, from zero.</h3>
+            <p class="problem">Dashboards running straight off live production databases — slow loads, constant engineering drag.</p>
+            <p class="did">Shipped a cloud BI stack on <b>AWS S3 + Glue + Athena + QuickSight</b> and migrated <b>6+ dashboards</b> off on-prem, then specified a natural-language chatbot that turns plain-English questions into charts on the same warehouse. Gave engineering back <b>6 man-hours a week</b>.</p>
+            <p style="font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;margin:0 0 16px;"><a href="https://aws.amazon.com/blogs/business-intelligence/pinnacle-infotechs-pioneering-business-intelligence-strategy-takes-off-with-amazon-quicksight/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor;">Co-authored the AWS blog on this&nbsp;work&nbsp;↗</a></p>
+            <div class="outcome"><div class="num">75<span class="u">% ↓</span></div><div class="label">dashboard load time</div></div>
+          </article>
+          <article class="case">
+            <div class="case-n">CASE 02 · TALENT INTELLIGENCE</div>
+            <h3>Talent Tracking System for 3,000+ engineers.</h3>
+            <p class="problem">Project staffing made on tribal knowledge across a global engineering org.</p>
+            <p class="did">Built a feature store and shipped a <b>Talent Tracking System</b> to match engineers to projects, surface hiring gaps and plan training. Resource allocation went from <b>3–4 days to hours</b>.</p>
+            <div class="outcome"><div class="num">3K+<span class="u">engineers</span></div><div class="label">allocation: days → hours</div></div>
+          </article>
+          <article class="case">
+            <div class="case-n">CASE 03 · CLIENT DESK GROWTH</div>
+            <h3>Drove 70%+ DAU lift on the client portal.</h3>
+            <p class="problem">Client Desk had low adoption among 400 named accounts.</p>
+            <p class="did">Led the activation campaign, reworked onboarding. <b>DAU grew 70%+ QoQ</b>; onboarded <b>98 of 400 clients</b> in a single month.</p>
+            <div class="outcome"><div class="num">70%+<span class="u">DAU</span></div><div class="label">QoQ growth</div></div>
+          </article>
+        </div>
+        <div class="award-strip">
+          <span class="star">★</span>
+          <div><b>AWS Recognition</b> — Co-authored the official <a href="https://aws.amazon.com/blogs/business-intelligence/pinnacle-infotechs-pioneering-business-intelligence-strategy-takes-off-with-amazon-quicksight/" target="_blank" rel="noopener">AWS Business Intelligence blog</a> on Pinnacle's QuickSight rollout, published 13 Dec 2023.</div>
+        </div>
+        <div class="photo-grid three">
+          <figure class="photo"><picture><source srcset="photos/pinnacle/team-1.webp" type="image/webp"><img src="photos/pinnacle/team-1.jpeg" alt="Pinnacle Infotech team" width="800" height="600" loading="lazy" decoding="async"></picture><figcaption>Pinnacle Infotech · Jaipur</figcaption></figure>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
-<!-- SIDE PROJECTS -->
-<section id="projects">
+<!-- ============ PROJECTS ============ -->
+<section id="projects" data-bucket="Projects">
   <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">07 — Selected work</div>
-      <h2>Published &amp; in the open.</h2>
+    <div class="bucket-head reveal">
+      <div class="tag">Projects</div>
+      <h2>Things I made outside the job description.</h2>
     </div>
+
+    <!-- BROKERBOOST -->
+    <details class="role-block reveal" id="brokerboost">
+      <summary>
+        <div class="rb-head">
+          <div class="rb-title">
+            <h3>BrokerBoost</h3>
+            <div class="rb-meta">Self-initiated · Real-estate broker SaaS · Concept deck</div>
+          </div>
+          <div class="rb-toggle"><span class="lbl-closed">The thinking</span><span class="lbl-open">Close</span><span class="rb-chev">⌄</span></div>
+        </div>
+        <p class="rb-line">A product scoped end to end — market, segmentation, revenue architecture, unit economics, roadmap. <b>Modelled, not shipped.</b></p>
+        <div class="rb-stats">
+          <div class="s"><div class="v">4</div><div class="k">Revenue streams modelled</div></div>
+          <div class="s"><div class="v">3</div><div class="k">Broker tiers, mid as beachhead</div></div>
+          <div class="s"><div class="v">12</div><div class="k">Slides, market → roadmap</div></div>
+        </div>
+      </summary>
+      <div class="rb-body">
+        <p class="block-intro">Indian brokers fight over a shrinking pool of portal leads, then struggle to find the right inventory once a buyer is finally in hand. <b>Solving demand alone is a feature. Solving supply alone is a feature.</b> BrokerBoost resolves both sides of the same transaction — a broker runs their own campaigns from one console, and when a buyer turns up, a co-broking handshake surfaces matching listings across the network in seconds.</p>
+        <div class="ownership">
+          <div class="own"><div class="tag">ACQUISITION</div><h4>Messaging — WhatsApp &amp; SMS.</h4><p>Blasts to the broker's own lead lists at <b>₹2/msg</b>, top-up credits, no lock-in. Telco pass-through pricing, ~50% margin.</p></div>
+          <div class="own"><div class="tag">ACQUISITION</div><h4>Meta campaigns from the console.</h4><p>Auto-creative and targeting at <b>₹240 / 1K impressions</b>. Media passes through; the margin sits in the layer above it.</p></div>
+          <div class="own"><div class="tag">STICKINESS</div><h4>AI creative.</h4><p>Auto-generated listing brochures, reels and broker brand kits at <b>₹199/pack</b> — margin expands as model costs fall.</p></div>
+          <div class="own"><div class="tag">★ THE ENGINE</div><h4>Broker Connect — the co-broking rail.</h4><p>A <b>₹200-a-side handshake</b> matching one broker's buyer to another's inventory. Pure software, bilateral lock-in, <b>~95% gross margin</b>.</p></div>
+          <div class="own"><div class="tag">SEGMENTATION</div><h4>Beachhead chosen, not assumed.</h4><p>Premium brokers already buy portal packages; volume brokers spend ~₹1K/month. The <b>mid tier</b> is the wedge — digital enough to adopt, under-served enough to care.</p></div>
+          <div class="own"><div class="tag">UNIT ECONOMICS</div><h4>Defended against the obvious objection.</h4><p>Modelled <b>revenue per lead</b> channel by channel against the portal's own — the deck answers "doesn't this cannibalise us?" with arithmetic rather than assertion.</p></div>
+        </div>
+        <div class="note">
+          <div class="tag">Worth being clear about</div>
+          <p>This is a <b>concept deck, not a shipped product</b> — the market sizes, pricing and three-year trajectory in it are modelled, not measured. What it demonstrates is the reasoning: segmentation, wedge selection, revenue architecture, unit economics and an engineering roadmap, argued end to end.</p>
+        </div>
+        <div style="margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a class="btn" href="/Brokerboost/" target="_blank" rel="noopener">Open the deck <span class="arr">↗</span></a>
+        </div>
+      </div>
+    </details>
+
     <div class="projects">
       <article class="project reveal">
         <div class="tag-row"><span>P · 01</span><span class="type">Published · AWS</span></div>
@@ -1011,30 +1022,41 @@
   </div>
 </section>
 
-<!-- STACK -->
-<section id="stack">
+<!-- ============ THINKING ============ -->
+<section id="thinking" data-bucket="Thinking">
   <div class="wrap">
-    <div class="section-head reveal">
-      <div class="kicker">08 — Stack</div>
-      <h2>Tools I actually use.</h2>
+    <div class="bucket-head reveal">
+      <div class="tag">Thinking</div>
+      <h2>How I think about growth.</h2>
     </div>
-    <div class="stack reveal">
-      <div class="cat">Channels</div>
-      <div class="items">Meta <span class="sep">·</span> Google <span class="sep">·</span> Criteo <span class="sep">·</span> Taboola <span class="sep">·</span> RTB <span class="sep">·</span> Branch <span class="sep">·</span> Appsflyer</div>
-      <div class="cat">Measurement</div>
-      <div class="items">GA4 <span class="sep">·</span> Tableau <span class="sep">·</span> GTM <span class="sep">·</span> MoEngage <span class="sep">·</span> CAPI <span class="sep">·</span> AEM</div>
-      <div class="cat">Data</div>
-      <div class="items">SQL <span class="sep">·</span> PySpark <span class="sep">·</span> Postgres <span class="sep">·</span> AWS Glue / Athena <span class="sep">·</span> Quicksight</div>
-      <div class="cat">AI &amp; Automation</div>
-      <div class="items">Claude <span class="sep">·</span> ChatGPT <span class="sep">·</span> Gemini <span class="sep">·</span> Kling <span class="sep">·</span> Veo 3 <span class="sep">·</span> Zapier <span class="sep">·</span> Apps Script</div>
-      <div class="cat">Languages</div>
-      <div class="items">Python <span class="sep">·</span> SQL <span class="sep">·</span> C++</div>
+    <div class="thoughts">
+      <div class="thought reveal">
+        <h3>On measurement vs. attribution</h3>
+        <p>Attribution tells you which pipe the water came out of. <b>Incrementality tells you if you needed the pipe.</b> Once you've run a geo-holdout, watched a channel go dark, and found <b>₹10L a month</b> the business never missed, you stop arguing about last-click.</p>
+      </div>
+      <div class="thought reveal d1">
+        <h3>On AI in performance marketing</h3>
+        <p>Most "AI in marketing" posts are prompt libraries. The real wins are boring: <b>scoring creative before it ships</b>, generating 15K variants when you'd previously brief 15. Hype is on image generation; leverage is on the filter that runs after.</p>
+      </div>
+      <div class="thought reveal d2">
+        <h3>On building vs. operating</h3>
+        <p>Most growth roles hand you a machine and ask you to turn the dial. The interesting work is <b>upstream of the dial</b> — the feed, the signal, the measurement. Fix those and the dial starts working; skip them and you're optimising noise. I'd rather own the thing end to end than tune someone else's.</p>
+      </div>
+    </div>
+
+    <div class="li-wrap" id="writing">
+      <h3>Thinking out loud on LinkedIn</h3>
+      <div id="li-posts" class="li-grid"></div>
+      <div class="li-footer">
+        <span class="li-updated" id="li-updated"></span>
+        <a class="btn ghost" href="https://linkedin.com/in/akashchaurasia05/" target="_blank" rel="noopener">All posts on LinkedIn <span class="arr">↗</span></a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact" data-bucket="Contact">
   <div class="wrap">
     <div class="contact-wrap reveal">
       <div>
@@ -1067,6 +1089,8 @@
   </div>
 </section>
 
+</main>
+
 <footer>
   <div>© 2026 Akash Chaurasia</div>
   <div class="footer-links">
@@ -1081,89 +1105,34 @@
 (function () {
   'use strict';
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ── DARK MODE ───────────────────────────────── */
   const html = document.documentElement;
+
+  /* ── THEME ───────────────────────────────────── */
   const toggles = [
     { btn: 'theme-toggle',   icon: 'theme-icon',   label: 'theme-label'   },
     { btn: 'theme-toggle-m', icon: 'theme-icon-m', label: 'theme-label-m' },
   ];
-
   function applyTheme(dark) {
     html.setAttribute('data-theme', dark ? 'dark' : 'light');
     toggles.forEach(({ icon, label }) => {
       const i = document.getElementById(icon);
       const l = document.getElementById(label);
-      if (i) i.textContent = dark ? '🌙' : '☀️';
+      if (i) i.textContent = dark ? '☾' : '☀';
       if (l) l.textContent = dark ? 'Light' : 'Dark';
     });
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
   }
-
-  const saved = localStorage.getItem('theme');
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
   applyTheme(saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches);
-
   toggles.forEach(({ btn }) => {
     const el = document.getElementById(btn);
     if (el) el.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') !== 'dark'));
   });
 
-  /* ── CANVAS BACKGROUND ───────────────────────── */
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas && canvas.getContext('2d');
-
-  if (ctx && !prefersReduced) {
-    let W, H;
-    const mouse = { x: .5, y: .5, tx: .5, ty: .5 };
-    const lerp  = (a, b, t) => a + (b - a) * t;
-
-    const orbs = [
-      { hue: 22,  size: 500, x: .15 * window.innerWidth,  y: .20 * window.innerHeight, vx:  .22, vy:  .16, pull: .000016 },
-      { hue: 34,  size: 640, x: .78 * window.innerWidth,  y: .65 * window.innerHeight, vx: -.18, vy:  .20, pull: .000012 },
-      { hue: 14,  size: 420, x: .50 * window.innerWidth,  y: .88 * window.innerHeight, vx:  .15, vy: -.14, pull: .000018 },
-      { hue: 44,  size: 340, x: .28 * window.innerWidth,  y: .50 * window.innerHeight, vx:  .25, vy:  .18, pull: .000009 },
-    ];
-
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize, { passive: true });
-    window.addEventListener('mousemove', e => { mouse.tx = e.clientX / W; mouse.ty = e.clientY / H; }, { passive: true });
-
-    function frame() {
-      ctx.clearRect(0, 0, W, H);
-      mouse.x = lerp(mouse.x, mouse.tx, .04);
-      mouse.y = lerp(mouse.y, mouse.ty, .04);
-      const dark = html.getAttribute('data-theme') === 'dark';
-      const alpha = dark ? .18 : .065;
-
-      orbs.forEach(o => {
-        o.vx += (mouse.x * W - o.x) * o.pull;
-        o.vy += (mouse.y * H - o.y) * o.pull;
-        o.vx *= .994; o.vy *= .994;
-        o.x += o.vx;  o.y += o.vy;
-        if (o.x < -o.size) o.vx += .4; if (o.x > W + o.size) o.vx -= .4;
-        if (o.y < -o.size) o.vy += .4; if (o.y > H + o.size) o.vy -= .4;
-
-        const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.size);
-        g.addColorStop(0, `hsla(${o.hue},82%,54%,${alpha})`);
-        g.addColorStop(1, `hsla(${o.hue},82%,54%,0)`);
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(o.x, o.y, o.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      requestAnimationFrame(frame);
-    }
-    frame();
-  }
-
   /* ── MOBILE MENU ─────────────────────────────── */
   const hamburger  = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
-
   function closeMenu() {
     hamburger.classList.remove('open');
     hamburger.setAttribute('aria-expanded', 'false');
@@ -1172,29 +1141,67 @@
   }
   if (hamburger && mobileMenu) {
     hamburger.addEventListener('click', () => {
-      const open = mobileMenu.classList.contains('open');
-      if (open) { closeMenu(); }
-      else {
-        hamburger.classList.add('open');
-        hamburger.setAttribute('aria-expanded', 'true');
-        mobileMenu.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
+      if (mobileMenu.classList.contains('open')) { closeMenu(); return; }
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
     });
     mobileMenu.querySelectorAll('.ml').forEach(a => a.addEventListener('click', closeMenu));
   }
 
+  /* ── DEEP LINKS INTO COLLAPSED BLOCKS ────────── */
+  // #housing, #flex, #pinnacle, #brokerboost were shared before the rebucketing,
+  // so they must still work — open the block, then scroll to it.
+  const NAV_OFFSET = 64; // sticky nav + a little breathing room
+
+  // `html { scroll-behavior: smooth }` makes even behavior:'auto' animate, which is
+  // wrong for landing on a deep link — suppress it for the jump, then restore.
+  function scrollToEl(el, smooth) {
+    const y = Math.max(0, el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET);
+    if (smooth && !prefersReduced) { window.scrollTo({ top: y, behavior: 'smooth' }); return; }
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    window.scrollTo(0, y);
+    html.style.scrollBehavior = prev;
+  }
+
+  function openFromHash(smooth) {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    const d = el.tagName === 'DETAILS' ? el : el.closest('details');
+    if (d && !d.open) d.open = true;
+    // Expanding changes the document height, so settle, then correct.
+    // scrollIntoView during the expand transition lands in the wrong place.
+    scrollToEl(el, smooth);
+    setTimeout(() => scrollToEl(el, false), 60);
+    setTimeout(() => scrollToEl(el, false), 500);
+  }
+  window.addEventListener('hashchange', () => openFromHash(true));
+  if (location.hash) {
+    window.addEventListener('DOMContentLoaded', () => openFromHash(false));
+    window.addEventListener('load', () => openFromHash(false));
+  }
+
+  // Any in-page link pointing at a collapsed block opens it first.
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      const t = document.getElementById(a.getAttribute('href').slice(1));
+      if (!t) return;
+      const d = t.tagName === 'DETAILS' ? t : t.closest('details');
+      if (d && !d.open) d.open = true;
+    });
+  });
+
   /* ── LINKEDIN POSTS ──────────────────────────── */
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  // Hide the whole section rather than leaving a heading above an empty grid.
+  // Hide the whole block rather than leaving a heading above an empty grid.
   function hideWriting() {
     const s = document.getElementById('writing');
     if (s) s.style.display = 'none';
-    document.querySelectorAll('a[href="#writing"]').forEach(a => {
-      const li = a.closest('li');
-      (li || a).style.display = 'none';
-    });
   }
 
   fetch('posts.json?t=' + Date.now())
@@ -1216,22 +1223,25 @@
             <a class="post-link" href="${esc(p.url||'#')}" target="_blank" rel="noopener">Read ↗</a>
           </div>
         </article>`).join('');
-      // trigger reveal for injected cards
       grid.querySelectorAll('.reveal').forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
-        else if (ro) ro.observe(el);
+        if (ro && el.getBoundingClientRect().top >= window.innerHeight) ro.observe(el);
+        else el.classList.add('in');
       });
     })
     .catch(hideWriting);
 
-  /* ── NUMBER COUNT-UP ─────────────────────────── */
+  /* ── NUMBER COUNT-UP — hero and summary stats only ── */
   const ease = t => 1 - Math.pow(1 - t, 3);
   function animateNum(el) {
-    const target = parseFloat(el.dataset.count), dec = parseInt(el.dataset.decimals||'0',10);
+    const target = parseFloat(el.dataset.count), dec = parseInt(el.dataset.decimals || '0', 10);
     if (isNaN(target)) return;
+    if (prefersReduced) {
+      el.textContent = dec > 0 ? target.toFixed(dec) : Math.round(target).toLocaleString('en-IN');
+      return;
+    }
     const start = performance.now();
     (function tick(now) {
-      const t = Math.min(1, (now - start) / 1100);
+      const t = Math.min(1, (now - start) / 1000);
       const v = target * ease(t);
       el.textContent = dec > 0 ? v.toFixed(dec) : Math.round(v).toLocaleString('en-IN');
       if (t < 1) requestAnimationFrame(tick);
@@ -1239,11 +1249,11 @@
     })(start);
   }
 
-  /* ── REVEAL ON SCROLL ────────────────────────── */
+  /* ── REVEAL ──────────────────────────────────── */
   const ro = 'IntersectionObserver' in window
     ? new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
-      }, { threshold: .08, rootMargin: '0px 0px -36px 0px' })
+      }, { threshold: .05, rootMargin: '0px 0px -30px 0px' })
     : null;
 
   const numObs = 'IntersectionObserver' in window
@@ -1257,30 +1267,46 @@
     el.getBoundingClientRect().top < window.innerHeight ? el.classList.add('in') : ro.observe(el);
   });
   document.querySelectorAll('.num-target').forEach(el => numObs ? numObs.observe(el) : animateNum(el));
-  setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')), 2500);
+  setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')), 2200);
 
-  /* ── SCROLL PROGRESS ─────────────────────────── */
-  const prog = document.getElementById('progress');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    prog.style.width = ((h.scrollTop / (h.scrollHeight - h.clientHeight || 1)) * 100) + '%';
-  }, { passive: true });
-
-  /* ── BACK TO TOP ─────────────────────────────── */
-  const bt = document.getElementById('back-top');
-  window.addEventListener('scroll', () => bt.classList.toggle('visible', window.scrollY > 500), { passive: true });
-  bt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  /* ── MAGNETIC BUTTONS ────────────────────────── */
-  if (!prefersReduced && window.matchMedia('(hover: hover)').matches) {
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        btn.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.16}px,${(e.clientY-r.top-r.height/2)*.16}px)`;
-      });
-      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  /* ── ACTIVE BUCKET: nav state + sticky rail ──── */
+  const rail = document.getElementById('rail');
+  const buckets = Array.from(document.querySelectorAll('section[data-bucket]'));
+  const navLinks = Array.from(document.querySelectorAll('.nav ul a'));
+  function setActive(name, id) {
+    if (rail) rail.textContent = name;
+    navLinks.forEach(a => {
+      if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
     });
   }
+  if ('IntersectionObserver' in window && buckets.length) {
+    const bucketObs = new IntersectionObserver(entries => {
+      const visible = entries.filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (visible) setActive(visible.target.dataset.bucket, visible.target.id);
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    buckets.forEach(s => bucketObs.observe(s));
+  }
+
+  /* ── SCROLL PROGRESS + BACK TO TOP ───────────── */
+  const prog = document.getElementById('progress');
+  const bt   = document.getElementById('back-top');
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight || 1;
+      if (prog) prog.style.width = ((h.scrollTop / max) * 100) + '%';
+      if (bt) bt.classList.toggle('visible', window.scrollY > 600);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  if (bt) bt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' }));
 
 })();
 </script>
