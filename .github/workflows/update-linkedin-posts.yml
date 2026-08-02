@@ -1,15 +1,16 @@
 name: Update LinkedIn Posts
 
-# Runs daily at 7 AM IST (1:30 AM UTC).
-# Also triggerable manually from the Actions tab.
+# Runs daily at 7 AM IST (1:30 AM UTC). Also triggerable manually from the Actions tab.
 #
-# SETUP (one-time):
+# SETUP (one-time — until this is done the job is a deliberate no-op):
 #   1. Go to https://rss.app and create a free feed from your LinkedIn profile URL.
 #   2. Copy the RSS feed URL (e.g. https://rss.app/feeds/xxxxxxxxx.xml).
-#   3. In your GitHub repo → Settings → Secrets → Actions, add:
-#      Name:  LINKEDIN_RSS_URL
-#      Value: <your rss.app feed URL>
-#   4. That's it. The workflow will update posts.json automatically every day.
+#   3. gh secret set LINKEDIN_RSS_URL --repo akash055-commits/akash055-commits.github.io
+#   4. Run the workflow manually once to confirm posts.json fills with real permalinks.
+#
+# Until the secret exists, posts.json stays empty and the Writing section hides itself.
+# Never hand-write posts into posts.json — engagement counts and dates that don't match
+# the real LinkedIn profile are worse than an absent section.
 
 on:
   schedule:
@@ -37,61 +38,90 @@ jobs:
             exit 0
           fi
 
-          curl -sSL "$RSS_URL" -o feed.xml
+          curl -sSL --fail --retry 3 "$RSS_URL" -o feed.xml || {
+            echo "::warning::Feed fetch failed — leaving posts.json untouched."
+            exit 0
+          }
 
           python3 - <<'EOF'
           import xml.etree.ElementTree as ET
-          import json, re, os
-          from datetime import datetime
+          import json, re, sys
+          from datetime import datetime, timezone
 
-          tree = ET.parse('feed.xml')
-          root = tree.getroot()
+          ATOM = '{http://www.w3.org/2005/Atom}'
 
-          ns = {}
-          # Handle Atom or RSS
-          items = root.findall('.//item') or root.findall('.//{http://www.w3.org/2005/Atom}entry')
+          try:
+              root = ET.parse('feed.xml').getroot()
+          except ET.ParseError as e:
+              print(f"::warning::Feed did not parse ({e}) — leaving posts.json untouched.")
+              sys.exit(0)
+
+          items = root.findall('.//item') or root.findall(f'.//{ATOM}entry')
+
+          def text(item, *tags):
+              for tag in tags:
+                  el = item.find(tag)
+                  if el is not None and el.text and el.text.strip():
+                      return el.text.strip()
+              return ''
+
+          def link_of(item):
+              # RSS 2.0 puts the URL in <link> element text; Atom puts it in <link href="...">.
+              el = item.find('link')
+              if el is not None and el.text and el.text.strip():
+                  return el.text.strip()
+              for el in item.findall(f'{ATOM}link'):
+                  rel = el.get('rel', 'alternate')
+                  if rel == 'alternate' and el.get('href'):
+                      return el.get('href').strip()
+              return text(item, f'{ATOM}id')
 
           posts = []
           for item in items[:6]:
-              def t(tag):
-                  el = item.find(tag)
-                  return el.text.strip() if el is not None and el.text else ''
+              title   = text(item, 'title', f'{ATOM}title')
+              pubdate = text(item, 'pubDate', f'{ATOM}published', f'{ATOM}updated')
+              desc    = text(item, 'description', f'{ATOM}summary', f'{ATOM}content') or title
 
-              title   = t('title') or t('{http://www.w3.org/2005/Atom}title')
-              link    = t('link')  or t('{http://www.w3.org/2005/Atom}id')
-              pubdate = t('pubDate') or t('{http://www.w3.org/2005/Atom}published')
-              desc    = t('description') or t('{http://www.w3.org/2005/Atom}summary') or title
-
-              # Strip HTML tags
               content = re.sub(r'<[^>]+>', '', desc).strip()
-              content = re.sub(r'&amp;', '&', content)
-              content = re.sub(r'&lt;', '<', content)
-              content = re.sub(r'&gt;', '>', content)
-              content = re.sub(r'&nbsp;', ' ', content)
-              content = re.sub(r'\n{3,}', '\n\n', content)
+              for entity, char in (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&nbsp;', ' '), ('&#39;', "'"), ('&quot;', '"')):
+                  content = content.replace(entity, char)
+              content = re.sub(r'\n{3,}', '\n\n', content).strip()
 
-              # Format date
-              try:
-                  d = datetime.strptime(pubdate[:16].strip(), '%a, %d %b %Y')
-                  friendly = d.strftime('%b %-d, %Y')
-              except Exception:
-                  friendly = pubdate[:10] if pubdate else ''
+              url = link_of(item)
+              if not content or not url:
+                  continue
 
+              friendly = ''
+              for fmt in ('%a, %d %b %Y', '%Y-%m-%d'):
+                  try:
+                      friendly = datetime.strptime(pubdate[:16].strip() if fmt.startswith('%a') else pubdate[:10], fmt).strftime('%b %-d, %Y')
+                      break
+                  except Exception:
+                      continue
+              if not friendly:
+                  friendly = pubdate[:10]
+
+              # Engagement is not available from RSS. Left at 0 so the template hides it —
+              # never populate these by hand.
               posts.append({
                   'date': friendly,
                   'content': content[:500],
                   'likes': 0,
                   'comments': 0,
-                  'url': link
+                  'url': url,
               })
 
-          out = {
-              'lastUpdated': datetime.utcnow().strftime('%Y-%m-%d'),
-              'posts': posts
-          }
+          # Guard: an empty parse means the feed broke, not that he stopped posting.
+          # Overwriting here would silently wipe the section.
+          if not posts:
+              print("::warning::Parsed 0 posts — leaving posts.json untouched.")
+              sys.exit(0)
 
-          with open('posts.json', 'w') as f:
-              json.dump(out, f, indent=2, ensure_ascii=False)
+          with open('posts.json', 'w', encoding='utf-8') as f:
+              json.dump({
+                  'lastUpdated': datetime.now(timezone.utc).strftime('%Y-%m-%d'),
+                  'posts': posts,
+              }, f, indent=2, ensure_ascii=False)
 
           print(f"Wrote {len(posts)} posts.")
           EOF

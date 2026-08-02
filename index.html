@@ -2,13 +2,55 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8" />
-<title>Akash Chaurasia — Performance Marketing & Growth</title>
+<title>Akash Chaurasia — Growth systems, built and scaled</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="description" content="Performance marketer building the growth engine at Housing.com. Previously co-founded Flex EV (0 → 500 vehicles). IIT Kharagpur, 2023." />
+<meta name="description" content="I build the systems that make growth work — creative-scoring ML, CAPI and CRM plumbing, incrementality testing — then scale spend on top of them. ₹3.5 Cr/month at Housing.com. Co-founded Flex EV. IIT Kharagpur, 2023." />
+<link rel="canonical" href="https://www.akashm.site/" />
+<meta name="theme-color" content="#F5F4EE" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0D0D0D" media="(prefers-color-scheme: dark)" />
+
+<!-- Social share -->
+<meta property="og:type"        content="profile" />
+<meta property="og:site_name"   content="Akash Chaurasia" />
+<meta property="og:url"         content="https://www.akashm.site/" />
+<meta property="og:title"       content="Akash Chaurasia — Growth systems, built and scaled" />
+<meta property="og:description" content="I build the systems that make growth work — creative-scoring ML, CAPI and CRM plumbing, incrementality testing — then scale spend on top of them. ₹3.5 Cr/month at Housing.com. Co-founded Flex EV." />
+<meta property="og:image"       content="https://www.akashm.site/photos/og-card.png" />
+<meta property="og:image:width"  content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt"   content="Akash Chaurasia — growth systems, built and scaled" />
+<meta name="twitter:card"        content="summary_large_image" />
+<meta name="twitter:title"       content="Akash Chaurasia — Growth systems, built and scaled" />
+<meta name="twitter:description" content="I build the systems that make growth work, then scale spend on top of them. ₹3.5 Cr/month at Housing.com. Co-founded Flex EV." />
+<meta name="twitter:image"       content="https://www.akashm.site/photos/og-card.png" />
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Geist:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Akash Chaurasia",
+  "url": "https://www.akashm.site/",
+  "image": "https://www.akashm.site/photos/portrait.jpeg",
+  "jobTitle": "Growth Associate, Performance Marketing",
+  "worksFor": { "@type": "Organization", "name": "Housing.com (REA India)" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Indian Institute of Technology Kharagpur" },
+  "address": { "@type": "PostalAddress", "addressLocality": "Gurugram", "addressRegion": "Haryana", "addressCountry": "IN" },
+  "email": "mailto:mkchaurasia05@gmail.com",
+  "sameAs": [
+    "https://www.linkedin.com/in/akashchaurasia05/",
+    "https://github.com/akash055-commits",
+    "https://aws.amazon.com/blogs/business-intelligence/pinnacle-infotechs-pioneering-business-intelligence-strategy-takes-off-with-amazon-quicksight/"
+  ],
+  "knowsAbout": ["Performance marketing", "Incrementality testing", "Marketing measurement", "AI creative operations", "Product management", "Business intelligence"]
+}
+</script>
 
 <style>
   /* ============================================
@@ -77,6 +119,17 @@
   a { color: inherit; text-decoration: none; }
   ::selection { background: var(--accent); color: #fff; }
   img { max-width: 100%; display: block; }
+  picture { display: block; }
+
+  /* Keyboard users shouldn't have to tab the whole nav to reach content. */
+  .skip {
+    position: absolute; left: -9999px; top: 0; z-index: 200;
+    background: var(--ink); color: var(--paper);
+    padding: 10px 16px; border-radius: 0 0 8px 0;
+    font-family: var(--f-mono); font-size: 12px;
+  }
+  .skip:focus { left: 0; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
   /* ============================================
      CANVAS BACKGROUND
@@ -191,7 +244,9 @@
   .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
   .hamburger.open span:nth-child(3) { transform: translateY(-6.75px) rotate(-45deg); }
 
-  @media (max-width: 720px) {
+  /* The inline nav needs ~940px to fit seven items plus the toggle and CTA.
+     Below that it pushed the Email button off-screen, so collapse to the menu earlier. */
+  @media (max-width: 960px) {
     .nav ul { display: none; }
     .nav .cta, .theme-toggle { display: none; }
     .hamburger { display: flex; }
@@ -537,11 +592,14 @@
      ============================================ */
   .photo-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .photo { position: relative; margin: 0; aspect-ratio: 4/3; border-radius: 8px; overflow: hidden; background: var(--paper-2); border: 1px solid var(--rule); transition: transform .25s ease, box-shadow .25s ease, border-color .2s; }
+  .photo picture { width: 100%; height: 100%; }
   .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
   .photo:hover { border-color: var(--ink-3); transform: translateY(-2px); box-shadow: 0 12px 24px -16px rgba(0,0,0,.15); }
   .photo:hover img { transform: scale(1.04); }
   .photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 11px 9px; background: linear-gradient(to top, rgba(11,13,16,.72), transparent); font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em; color: #fff; opacity: 0; transition: opacity .2s; }
   .photo:hover figcaption { opacity: 1; }
+  /* Touch devices never get :hover — show the captions there instead of hiding them forever. */
+  @media (hover: none) { .photo figcaption { opacity: 1; } }
   @media (max-width: 780px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
 
   /* ============================================
@@ -582,6 +640,7 @@
 </head>
 <body>
 
+<a class="skip" href="#housing">Skip to content</a>
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
 <div class="scroll-progress" id="progress"></div>
 <button class="back-top" id="back-top" aria-label="Back to top">↑</button>
@@ -594,8 +653,10 @@
       <li><a href="#housing">Housing.com</a></li>
       <li><a href="#flex">Flex EV</a></li>
       <li><a href="#pinnacle">Pinnacle</a></li>
+      <li><a href="#brokerboost">BrokerBoost</a></li>
       <li><a href="#think">How I think</a></li>
-      <li><a href="#stack">Stack</a></li>
+      <li><a href="#writing">Writing</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-right">
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
@@ -616,9 +677,11 @@
     <a href="#housing" class="ml">Housing.com <span class="arr">→</span></a>
     <a href="#flex"    class="ml">Flex EV <span class="arr">→</span></a>
     <a href="#pinnacle"class="ml">Pinnacle <span class="arr">→</span></a>
+    <a href="#brokerboost" class="ml">BrokerBoost <span class="arr">→</span></a>
     <a href="#think"   class="ml">How I think <span class="arr">→</span></a>
     <a href="#writing" class="ml">Writing <span class="arr">→</span></a>
     <a href="#stack"   class="ml">Stack <span class="arr">→</span></a>
+    <a href="#contact" class="ml">Contact <span class="arr">→</span></a>
   </nav>
   <div class="mobile-ctas">
     <a class="btn" href="mailto:mkchaurasia05@gmail.com">Email me ↗</a>
@@ -639,15 +702,15 @@
       <div class="hero-intro">
         <div class="eyebrow">
           <span class="pulse"></span>
-          <span>Performance Marketing &amp; Growth</span>
+          <span>Growth Systems · Performance Marketing · Product</span>
         </div>
         <h1>Akash<br>Chaurasia<span class="soft">.</span></h1>
         <p class="lede">
-          <b>Building the growth engine at Housing.com.</b> Previously co-founded <b>Flex EV</b> (0 → 500 vehicles). I work at the seam of paid media, measurement, and AI creative ops — as an operator &amp; strategist.
+          <b>I build the systems that make growth work, then scale spend on top of them.</b> A creative-scoring model that filters bad images before the auction. CAPI wired to CRM so bids chase qualified leads. An incrementality framework that found <b>₹10L/month</b> of spend the business didn't need. Today that runs <b>₹3.5 Cr/month</b> at Housing.com — before it, I co-founded <b>Flex EV</b> and built its fleet platform from scratch.
         </p>
       </div>
       <div class="hero-portrait">
-        <img src="photos/portrait.jpeg" alt="Akash Chaurasia" loading="eager">
+        <picture><source srcset="photos/portrait.webp" type="image/webp"><img src="photos/portrait.jpeg" alt="Akash Chaurasia" width="800" height="1017" loading="eager" fetchpriority="high" decoding="async"></picture>
       </div>
     </div>
 
@@ -678,7 +741,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="kicker">01 — Current</div>
-      <h2>Housing.com — scaling the paid growth engine.</h2>
+      <h2>Housing.com — building the machine, then scaling it.</h2>
     </div>
     <div class="work-meta">
       <div class="role">Growth Associate · <span class="co">Housing.com</span></div>
@@ -686,54 +749,74 @@
     </div>
     <div class="cases">
       <article class="case reveal">
-        <div class="case-n">CASE 01 · PAID MEDIA</div>
-        <h3>Scaled Meta + Google from ₹1.3Cr → ₹3Cr/mo across 36 cities.</h3>
-        <p class="problem">Fragmented 180-campaign account starved of learning volume.</p>
-        <p class="did">Restructured <b>180 → 100 campaigns</b> into PAN-India / city-cluster / city tiers. Shifted bidding from Highest Volume to <b>tCPA</b> under SOP-led governance.</p>
+        <div class="case-n">CASE 01 · MEASUREMENT</div>
+        <h3>The incrementality framework that found ₹10L/month we didn't need to spend.</h3>
+        <p class="problem">Budget allocation running on last-click and gut calls.</p>
+        <p class="did">Built the cross-city testing framework Housing.com now uses to measure <b>true campaign lift</b> and cost per incremental lead, across <b>12 markets</b>. A geo-holdout in Chennai surfaced <b>₹10L/month</b> of non-incremental spend — roughly <b>₹80L/quarter</b> at full scale.</p>
         <div class="outcome">
-          <div class="num">2.3<span class="u">× spend</span></div>
-          <div class="label">flat CPV · CPL improved</div>
+          <div class="num">₹10L<span class="u">/ month</span></div>
+          <div class="label">non-incremental spend found</div>
         </div>
       </article>
       <article class="case reveal d1">
         <div class="case-n">CASE 02 · AI CREATIVE</div>
-        <h3>Real-time creative scoring ML model, with the DS team.</h3>
-        <p class="problem">Bad property images slipping into paid campaigns.</p>
-        <p class="did">Shipped an AI creative engine — <b>15K videos</b> via Kling + Veo 3, <b>~30K images</b> enhanced. Real-time scoring model filters non-marketable creative pre-auction.</p>
+        <h3>An AI creative engine — and a quality gate that runs at auction time.</h3>
+        <p class="problem">Bad property images slipping into live campaigns, week after week.</p>
+        <p class="did">Shipped <b>15,000 videos</b> through Kling AI and Veo 3 and <b>30,000 enhanced images</b>. Built a runtime ML scoring model with the Data Science team that strips non-marketable creative from the feed before it serves, and expanded into Reels and Stories.</p>
         <div class="outcome">
-          <div class="num">0<span class="u">escalations</span></div>
-          <div class="label">bad images eliminated</div>
+          <div class="num">80<span class="u">% ↓</span></div>
+          <div class="label">bad-image escalations</div>
         </div>
       </article>
       <article class="case reveal d2">
-        <div class="case-n">CASE 03 · LEAD QUALITY</div>
-        <h3>CAPI + CRM integration for lead-quality optimisation.</h3>
-        <p class="problem">No per-channel × campaign view of lead quality.</p>
-        <p class="did">Wired <b>CAPI for Leadgen</b> with CRM + dialer signals. Bids now optimise toward qualified leads, not raw submits.</p>
+        <div class="case-n">CASE 03 · TRACKING &amp; DATA QUALITY</div>
+        <h3>Rebuilt the catalog feed: 18% → 90%+ match rate.</h3>
+        <p class="problem">Campaigns optimising on broken signal — most of the catalog never matched.</p>
+        <p class="did">Stripped irrelevant Meta Pixel and FB SDK parameters, added an <b>hourly out-of-stock cron</b>, and enriched property params. Fixed an <b>18% city-mismatch</b> rate in the same pass.</p>
         <div class="outcome">
-          <div class="num">₹2L<span class="u">/ month</span></div>
-          <div class="label">wasted spend killed</div>
+          <div class="num">+10<span class="u">% CTR</span></div>
+          <div class="label">QoQ · CVR +5%</div>
         </div>
       </article>
       <article class="case reveal d3">
-        <div class="case-n">CASE 04 · MEASUREMENT</div>
-        <h3>Cross-city incrementality testing across 12 markets.</h3>
-        <p class="problem">Budget allocation on last-click &amp; gut calls.</p>
-        <p class="did">Built the measurement framework Housing.com now uses to evaluate <b>true campaign lift</b> and cost per incremental lead.</p>
+        <div class="case-n">CASE 04 · LEAD QUALITY</div>
+        <h3>CAPI wired into CRM, so bids optimise on qualified leads.</h3>
+        <p class="problem">No per-channel × campaign view of what a good lead actually looked like.</p>
+        <p class="did">Connected <b>CAPI for Leadgen</b> to CRM and dialer signals, then moved optimisation onto the <b>call-connected lead</b> rather than the raw form submit.</p>
         <div class="outcome">
-          <div class="num">12<span class="u">markets</span></div>
-          <div class="label">framework in production</div>
+          <div class="num">9<span class="u">% ↓</span></div>
+          <div class="label">cost per qualified lead · Mumbai &amp; Noida</div>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case-n">CASE 05 · AUTOMATION</div>
+        <h3>Built the CRM behind a 5-person lead-generation desk.</h3>
+        <p class="problem">Callers working manual lists, with no view of agent productivity.</p>
+        <p class="did">Built the CRM and the automation layer around it for a <b>5-person lead-generation calling team</b> — the work that won the first SPOTLIGHT award.</p>
+        <div class="outcome">
+          <div class="num">₹2L<span class="u">/ month</span></div>
+          <div class="label">agent productivity saved</div>
+        </div>
+      </article>
+      <article class="case reveal d1">
+        <div class="case-n">CASE 06 · PAID MEDIA</div>
+        <h3>Scaled Meta + Google from ₹1.5 Cr → ₹3.5 Cr/mo, 12 → 36 cities.</h3>
+        <p class="problem">A fragmented 180-campaign account starved of learning volume.</p>
+        <p class="did">Restructured <b>180 → 100 campaigns</b> into PAN-India, city-cluster and city tiers, and shifted bidding from Highest Volume to <b>tCPA</b> under SOP-led governance. <b>CPL −5% QoQ</b>, CPM flat YoY against an industry that rose ~5%, affiliate share <b>6% → 9%</b>.</p>
+        <div class="outcome">
+          <div class="num">15<span class="u">% ↓</span></div>
+          <div class="label">CPV, while spend grew 2.3×</div>
         </div>
       </article>
     </div>
     <div class="award-strip reveal">
       <span class="star">★ ★</span>
-      <div><b>2× SPOTLIGHT Quarterly Award</b> — for AI &amp; process-automation work. <b>Martech AI Awards Winner</b> with the Housing.com team.</div>
+      <div><b>2× SPOTLIGHT Quarter Award</b> — one for building the CRM, one for the campaign restructure and the Kling AI creative engine. <b>Martech AI Awards winner</b> with the Housing.com team.</div>
     </div>
     <div class="photo-grid reveal" style="grid-template-columns: repeat(3, 1fr);">
-      <figure class="photo"><img src="photos/housing/martech-awards.jpeg" alt="Martech AI Awards" loading="lazy"><figcaption>Martech AI Awards · Winner</figcaption></figure>
-      <figure class="photo"><img src="photos/housing/team-1.jpeg" alt="Housing.com team" loading="lazy"><figcaption>The team</figcaption></figure>
-      <figure class="photo"><img src="photos/housing/team-2.jpeg" alt="Housing.com team" loading="lazy"><figcaption>The team</figcaption></figure>
+      <figure class="photo"><picture><source srcset="photos/housing/martech-awards.webp" type="image/webp"><img src="photos/housing/martech-awards.jpeg" alt="Martech AI Awards" width="800" height="642" loading="lazy" decoding="async"></picture><figcaption>Martech AI Awards · Winner</figcaption></figure>
+      <figure class="photo"><picture><source srcset="photos/housing/team-1.webp" type="image/webp"><img src="photos/housing/team-1.jpeg" alt="Housing.com team" width="800" height="565" loading="lazy" decoding="async"></picture><figcaption>The team</figcaption></figure>
+      <figure class="photo"><picture><source srcset="photos/housing/team-2.webp" type="image/webp"><img src="photos/housing/team-2.jpeg" alt="Housing.com team" width="800" height="565" loading="lazy" decoding="async"></picture><figcaption>The team</figcaption></figure>
     </div>
   </div>
 </section>
@@ -747,34 +830,34 @@
     </div>
     <div class="work-meta">
       <div class="role">Co-Founder · <span class="co">Flex EV</span> · B2B2C EV rental, Delhi NCR</div>
-      <div class="period">Dec 2023 — Jan 2025</div>
+      <div class="period">Dec 2024 — Oct 2025</div>
     </div>
     <div class="flex-intro reveal">
-      <p>Co-founded a <b>B2B2C EV rental business</b> in Delhi NCR. Scaled to <b>500 vehicles</b> and <b>₹40L/month topline</b> in 12 months, while holding a full-time role at Housing.com. Exited in early 2025.</p>
+      <p>Co-founded a <b>B2B2C EV rental business</b> for gig delivery riders in Delhi NCR. Scaled to <b>500+ vehicles</b> and <b>₹40L MRR</b> in 12 months at <b>86% utilisation</b> — while holding a full-time role at Housing.com. Stepped back in October 2025.</p>
       <div class="stats-inline">
-        <div class="cell"><div class="v"><span class="num-target" data-count="500">0</span></div><div class="k">Vehicles on road</div></div>
-        <div class="cell"><div class="v">₹<span class="num-target" data-count="40">0</span>L<span class="u">/mo</span></div><div class="k">Monthly topline</div></div>
-        <div class="cell"><div class="v">1 → <span class="num-target" data-count="3">0</span></div><div class="k">Operational hubs</div></div>
-        <div class="cell"><div class="v">2 → <span class="num-target" data-count="30">0</span></div><div class="k">Team, in 12 months</div></div>
+        <div class="cell"><div class="v"><span class="num-target" data-count="500">0</span>+</div><div class="k">Vehicles on road</div></div>
+        <div class="cell"><div class="v">₹<span class="num-target" data-count="40">0</span>L<span class="u">MRR</span></div><div class="k">Reached in 12 months</div></div>
+        <div class="cell"><div class="v"><span class="num-target" data-count="86">0</span>%</div><div class="k">Fleet utilisation</div></div>
+        <div class="cell"><div class="v">2 → <span class="num-target" data-count="30">0</span></div><div class="k">Team, across 3 hubs</div></div>
       </div>
     </div>
     <div class="ownership reveal">
       <div class="own"><div class="tag">OPS</div><h4>End-to-end ops from scratch.</h4><p>Rider onboarding, collections, recovery, maintenance. <b>1 → 3 hubs</b>, <b>2 → 30 team</b>.</p></div>
-      <div class="own"><div class="tag">FINANCE</div><h4>Payment automation on Easebuzz.</h4><p>Replaced manual QR collections with <b>Easebuzz bulk payment links</b>. Cleaned up reconciliation, cut leakage.</p></div>
-      <div class="own"><div class="tag">PRODUCT</div><h4>In-house Fleet &amp; Rider platform.</h4><p>Built a <b>Fleet Management Platform</b> + Rider App in-house for rent tracking, dues, and asset visibility.</p></div>
-      <div class="own"><div class="tag">TELEMATICS</div><h4>Ola fleet telematics integration.</h4><p>Integrated telematics for remote immobilisation &amp; theft prevention on the Ola fleet.</p></div>
-      <div class="own"><div class="tag">3PL · GTM</div><h4>3PL partnerships with Uber, Zepto, Porter, Ola.</h4><p>Cold outreach → commercial close across four logistics platforms.</p></div>
+      <div class="own"><div class="tag">FINANCE</div><h4>Payment &amp; KYC automation.</h4><p>Replaced manual QR collections with <b>Easebuzz bulk payment links</b> and automated rider KYC through <b>Leegality</b>. Cleaned up reconciliation, cut leakage.</p></div>
+      <div class="own"><div class="tag">PRODUCT</div><h4>Sheets and Apps Script → a real platform.</h4><p>Started the whole operation on Google Sheets, GForms and Apps Script, then rebuilt it as an in-house <b>Fleet Management Platform</b> and Rider App for rent tracking, dues and asset visibility.</p></div>
+      <div class="own"><div class="tag">TELEMATICS</div><h4>In-vehicle IoT into the fleet platform.</h4><p>Piped third-party in-vehicle IoT and webhooks into our own platform for <b>remote immobilisation</b> and theft prevention.</p></div>
+      <div class="own"><div class="tag">DEMAND · GTM</div><h4>Demand partnerships with Uber, Zepto and Porter.</h4><p>Cold outreach → commercial close across three delivery platforms, plus OEM and battery-swap supply deals.</p></div>
       <div class="own"><div class="tag">LEADERSHIP</div><h4>Built the operating layer.</h4><p>Hired the first hub managers. Wrote the SOPs for collections, recovery, redeployment.</p></div>
     </div>
     <div class="exit-note reveal">
       <div class="tag">On the exit</div>
-      <p>Exited in early 2025 after a <b>structural disagreement on operating discipline</b> with my co-founder. Took the lessons; took the operator scars.</p>
+      <p>Stepped back in October 2025 after a <b>structural disagreement on operating discipline</b> with my co-founder — foundations before scale. Took the lessons; took the operator scars.</p>
     </div>
     <div class="photo-grid reveal">
-      <figure class="photo"><img src="photos/flexev/co-founder-fleet.jpeg" alt="With co-founder at the fleet hub" loading="lazy"><figcaption>With co-founder · fleet hub</figcaption></figure>
-      <figure class="photo"><img src="photos/flexev/fleet-2.jpeg" alt="Flex EV fleet" loading="lazy"><figcaption>On the ground</figcaption></figure>
-      <figure class="photo"><img src="photos/flexev/fleet-3.jpeg" alt="Flex EV operations" loading="lazy"><figcaption>Ops</figcaption></figure>
-      <figure class="photo"><img src="photos/flexev/fleet-4.jpeg" alt="Flex EV fleet" loading="lazy"><figcaption>The fleet</figcaption></figure>
+      <figure class="photo"><picture><source srcset="photos/flexev/co-founder-fleet.webp" type="image/webp"><img src="photos/flexev/co-founder-fleet.jpeg" alt="With co-founder at the fleet hub" width="562" height="1000" loading="lazy" decoding="async"></picture><figcaption>With co-founder · fleet hub</figcaption></figure>
+      <figure class="photo"><picture><source srcset="photos/flexev/fleet-2.webp" type="image/webp"><img src="photos/flexev/fleet-2.jpeg" alt="Flex EV fleet" width="800" height="600" loading="lazy" decoding="async"></picture><figcaption>On the ground</figcaption></figure>
+      <figure class="photo"><picture><source srcset="photos/flexev/fleet-3.webp" type="image/webp"><img src="photos/flexev/fleet-3.jpeg" alt="Flex EV operations" width="800" height="897" loading="lazy" decoding="async"></picture><figcaption>Ops</figcaption></figure>
+      <figure class="photo"><picture><source srcset="photos/flexev/fleet-4.webp" type="image/webp"><img src="photos/flexev/fleet-4.jpeg" alt="Flex EV fleet" width="800" height="437" loading="lazy" decoding="async"></picture><figcaption>The fleet</figcaption></figure>
     </div>
   </div>
 </section>
@@ -790,22 +873,22 @@
       <div class="role">Product Manager · <span class="co">Pinnacle Infotech</span> · R&amp;D · Jaipur</div>
       <div class="period">Jun 2023 — Dec 2023</div>
     </div>
-    <p class="reveal" style="font-size:16px;line-height:1.6;color:var(--ink-2);font-style:italic;max-width:72ch;margin:0 0 32px;">My first role out of IIT KGP. Joined a 6-person BI team that was new to the cloud — helped take it from Excel reports to a production data platform powering 500+ users.</p>
+    <p class="reveal" style="font-size:16px;line-height:1.6;color:var(--ink-2);font-style:italic;max-width:72ch;margin:0 0 32px;">My first role out of IIT KGP — and Pinnacle's first-ever PM, in their R&amp;D wing. A BIM engineering firm running ~500 live projects for international clients. I helped take its reporting from on-prem Excel to a production data platform on AWS.</p>
     <div class="cases">
       <article class="case reveal">
         <div class="case-n">CASE 01 · DATA PLATFORM</div>
-        <h3>Co-built Pinnacle's BI strategy on AWS, from zero.</h3>
-        <p class="problem">Dashboards built on live production DBs — 12 hrs of dev time per dashboard, slow loads.</p>
-        <p class="did">Shipped a cloud BI stack on <b>AWS S3 + Glue + Athena + QuickSight</b>. Dev time dropped <b>12 hrs → 3 hrs</b>, loads near-instant.</p>
-        <p style="font-family:var(--f-mono);font-size:11px;color:var(--accent);font-style:italic;letter-spacing:.04em;margin:0 0 16px;">Co-authored the AWS guest blog on this work.</p>
-        <div class="outcome"><div class="num">75<span class="u">% ↓</span></div><div class="label">dashboard dev time</div></div>
+        <h3>Co-built Pinnacle's BI platform on AWS, from zero.</h3>
+        <p class="problem">Dashboards running straight off live production databases — slow loads, constant engineering drag.</p>
+        <p class="did">Shipped a cloud BI stack on <b>AWS S3 + Glue + Athena + QuickSight</b> and migrated <b>6+ dashboards</b> off on-prem, then specified a natural-language chatbot that turns plain-English questions into charts on the same warehouse. Gave engineering back <b>6 man-hours a week</b>.</p>
+        <p style="font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;margin:0 0 16px;"><a href="https://aws.amazon.com/blogs/business-intelligence/pinnacle-infotechs-pioneering-business-intelligence-strategy-takes-off-with-amazon-quicksight/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor;">Co-authored the AWS blog on this&nbsp;work&nbsp;↗</a></p>
+        <div class="outcome"><div class="num">75<span class="u">% ↓</span></div><div class="label">dashboard load time</div></div>
       </article>
       <article class="case reveal d1">
         <div class="case-n">CASE 02 · TALENT INTELLIGENCE</div>
         <h3>Talent Tracking System for 3,000+ engineers.</h3>
         <p class="problem">Project staffing made on tribal knowledge across a global engineering org.</p>
-        <p class="did">Built a feature store and shipped a <b>Talent Tracking System</b> to match engineers to projects, surface hiring gaps, plan training.</p>
-        <div class="outcome"><div class="num">3K+<span class="u">engineers</span></div><div class="label">6+ BI dashboards live</div></div>
+        <p class="did">Built a feature store and shipped a <b>Talent Tracking System</b> to match engineers to projects, surface hiring gaps and plan training. Resource allocation went from <b>3–4 days to hours</b>.</p>
+        <div class="outcome"><div class="num">3K+<span class="u">engineers</span></div><div class="label">allocation: days → hours</div></div>
       </article>
       <article class="case reveal d2">
         <div class="case-n">CASE 03 · CLIENT DESK GROWTH</div>
@@ -817,10 +900,48 @@
     </div>
     <div class="award-strip reveal">
       <span class="star">★</span>
-      <div><b>AWS Recognition</b> — Co-authored the official AWS Business Intelligence blog on Pinnacle's QuickSight rollout (Dec 2023).</div>
+      <div><b>AWS Recognition</b> — Co-authored the official <a href="https://aws.amazon.com/blogs/business-intelligence/pinnacle-infotechs-pioneering-business-intelligence-strategy-takes-off-with-amazon-quicksight/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor;">AWS Business Intelligence blog</a> on Pinnacle's QuickSight rollout, published 13 Dec 2023.</div>
     </div>
     <div class="photo-grid reveal" style="grid-template-columns:repeat(3,1fr);">
-      <figure class="photo"><img src="photos/pinnacle/team-1.jpeg" alt="Pinnacle Infotech team" loading="lazy"><figcaption>Pinnacle Infotech · Jaipur</figcaption></figure>
+      <figure class="photo"><picture><source srcset="photos/pinnacle/team-1.webp" type="image/webp"><img src="photos/pinnacle/team-1.jpeg" alt="Pinnacle Infotech team" width="800" height="600" loading="lazy" decoding="async"></picture><figcaption>Pinnacle Infotech · Jaipur</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- BROKERBOOST -->
+<section id="brokerboost">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">04 — Product</div>
+      <h2>BrokerBoost — a product scoped end to end.</h2>
+    </div>
+    <div class="work-meta">
+      <div class="role">Self-initiated · <span class="co">BrokerBoost</span> · Real-estate broker SaaS</div>
+      <div class="period">Concept · 12-slide deck</div>
+    </div>
+    <div class="flex-intro reveal">
+      <p>Indian brokers fight over a shrinking pool of portal leads, then struggle to find the right inventory once a buyer is finally in hand. <b>Solving demand alone is a feature. Solving supply alone is a feature.</b> BrokerBoost resolves both sides of the same transaction — a broker runs their own campaigns from one console, and when a buyer turns up, a co-broking handshake surfaces matching listings across the network in seconds.</p>
+      <div class="stats-inline">
+        <div class="cell"><div class="v">3</div><div class="k">Broker tiers, mid as beachhead</div></div>
+        <div class="cell"><div class="v">4</div><div class="k">Revenue streams modelled</div></div>
+        <div class="cell"><div class="v">12</div><div class="k">Slides, market → roadmap</div></div>
+        <div class="cell"><div class="v">95<span class="u">% GM</span></div><div class="k">On the network layer</div></div>
+      </div>
+    </div>
+    <div class="ownership reveal">
+      <div class="own"><div class="tag">ACQUISITION</div><h4>Messaging — WhatsApp &amp; SMS.</h4><p>Blasts to the broker's own lead lists at <b>₹2/msg</b>, top-up credits, no lock-in. Telco pass-through pricing, ~50% margin.</p></div>
+      <div class="own"><div class="tag">ACQUISITION</div><h4>Meta campaigns from the console.</h4><p>Auto-creative and targeting at <b>₹240 / 1K impressions</b>. Media passes through; the margin sits in the layer above it.</p></div>
+      <div class="own"><div class="tag">STICKINESS</div><h4>AI creative.</h4><p>Auto-generated listing brochures, reels and broker brand kits at <b>₹199/pack</b> — margin expands as model costs fall.</p></div>
+      <div class="own"><div class="tag">★ THE ENGINE</div><h4>Broker Connect — the co-broking rail.</h4><p>A <b>₹200-a-side handshake</b> matching one broker's buyer to another's inventory. Pure software, bilateral lock-in, <b>~95% gross margin</b>.</p></div>
+      <div class="own"><div class="tag">SEGMENTATION</div><h4>Beachhead chosen, not assumed.</h4><p>Premium brokers already buy portal packages; volume brokers spend ~₹1K/month. The <b>mid tier</b> is the wedge — digital enough to adopt, under-served enough to care.</p></div>
+      <div class="own"><div class="tag">UNIT ECONOMICS</div><h4>Defended against the obvious objection.</h4><p>Modelled <b>revenue per lead</b> channel by channel against the portal's own — the deck answers "doesn't this cannibalise us?" with arithmetic rather than assertion.</p></div>
+    </div>
+    <div class="exit-note reveal">
+      <div class="tag">Worth being clear about</div>
+      <p>This is a <b>concept deck, not a shipped product</b> — the market sizes, pricing and three-year trajectory in it are modelled, not measured. What it demonstrates is the reasoning: segmentation, wedge selection, revenue architecture, unit economics and an engineering roadmap, argued end to end.</p>
+    </div>
+    <div style="margin-top:28px;display:flex;gap:10px;flex-wrap:wrap;">
+      <a class="btn" href="/Brokerboost/" target="_blank" rel="noopener">Open the deck <span class="arr">↗</span></a>
     </div>
   </div>
 </section>
@@ -829,21 +950,21 @@
 <section id="think">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="kicker">04 — Views</div>
+      <div class="kicker">05 — Views</div>
       <h2>How I think about growth.</h2>
     </div>
     <div class="thoughts">
       <div class="thought reveal">
         <h3>On measurement vs. attribution</h3>
-        <p>Attribution tells you which pipe the water came out of. <b>Incrementality tells you if you needed the pipe.</b> Once you've run a geo-holdout across 12 cities and watched a channel vanish without the topline moving, you stop arguing about last-click.</p>
+        <p>Attribution tells you which pipe the water came out of. <b>Incrementality tells you if you needed the pipe.</b> Once you've run a geo-holdout, watched a channel go dark, and found <b>₹10L a month</b> the business never missed, you stop arguing about last-click.</p>
       </div>
       <div class="thought reveal d1">
         <h3>On AI in performance marketing</h3>
         <p>Most "AI in marketing" posts are prompt libraries. The real wins are boring: <b>scoring creative before it ships</b>, generating 15K variants when you'd previously brief 15. Hype is on image generation; leverage is on the filter that runs after.</p>
       </div>
       <div class="thought reveal d2">
-        <h3>On scope vs. depth</h3>
-        <p>The trap for technical growth folks is becoming <b>the one pulled into every cross-team thing</b> — CAPI wiring, dashboard fixes, Zapier flows — instead of compounding in one channel. I've done the cross-team work; I'm deliberate now about owning a channel's P&amp;L.</p>
+        <h3>On building vs. operating</h3>
+        <p>Most growth roles hand you a machine and ask you to turn the dial. The interesting work is <b>upstream of the dial</b> — the feed, the signal, the measurement. Fix those and the dial starts working; skip them and you're optimising noise. I'd rather own the thing end to end than tune someone else's.</p>
       </div>
     </div>
   </div>
@@ -853,7 +974,7 @@
 <section id="writing">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="kicker">05 — Writing</div>
+      <div class="kicker">06 — Writing</div>
       <h2>Thinking out loud on LinkedIn.</h2>
     </div>
     <div id="li-posts" class="li-grid">
@@ -870,33 +991,21 @@
 <section id="projects">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="kicker">06 — Side work</div>
-      <h2>Case studies &amp; decks.</h2>
+      <div class="kicker">07 — Selected work</div>
+      <h2>Published &amp; in the open.</h2>
     </div>
     <div class="projects">
       <article class="project reveal">
-        <div class="tag-row"><span>P · 01</span><span class="type">Product Case</span></div>
-        <h4>Flipkart APM Deck</h4>
-        <p>A structured product case on a real Flipkart problem — retention, growth, user-journey diagnosis.</p>
-        <a class="plink" href="https://drive.google.com/file/d/1eSMQiWW0WuEgw_mhrfNvdS4RdkzAJStG/view" target="_blank" rel="noopener"><span>View deck</span><span class="arr">↗</span></a>
+        <div class="tag-row"><span>P · 01</span><span class="type">Published · AWS</span></div>
+        <h4>Pinnacle Infotech's BI strategy, on the AWS blog</h4>
+        <p>Co-authored with AWS for their Business Intelligence blog — how we took Pinnacle from on-prem reporting to a QuickSight data platform. Published Dec 2023.</p>
+        <a class="plink" href="https://aws.amazon.com/blogs/business-intelligence/pinnacle-infotechs-pioneering-business-intelligence-strategy-takes-off-with-amazon-quicksight/" target="_blank" rel="noopener"><span>Read on aws.amazon.com</span><span class="arr">↗</span></a>
       </article>
       <article class="project reveal d1">
-        <div class="tag-row"><span>P · 02</span><span class="type">Social Impact</span></div>
-        <h4>Hult Prize Submission</h4>
-        <p>A social-impact startup idea — solution model, GTM, and scalability approach.</p>
-        <a class="plink" href="https://drive.google.com/file/d/10uugRVYZUJxA5nqO1BSIW066fl47JM5m/view" target="_blank" rel="noopener"><span>View submission</span><span class="arr">↗</span></a>
-      </article>
-      <article class="project reveal d2">
-        <div class="tag-row"><span>P · 03</span><span class="type">Case · Open IIT</span></div>
-        <h4>Open IIT Case Study</h4>
-        <p>Competitive case-solving under time pressure — ambiguous problem, data-backed recommendation, tight clock.</p>
-        <a class="plink" href="https://drive.google.com/file/d/17axB8Q1WHw2vfvYFbSzk7GRB157aeuUV/view" target="_blank" rel="noopener"><span>View case</span><span class="arr">↗</span></a>
-      </article>
-      <article class="project reveal d3">
-        <div class="tag-row"><span>P · 04</span><span class="type">National Case Comp</span></div>
-        <h4>Indian Case Challenge 2021</h4>
-        <p>National-level case competition — market research, strategy, and a business-grade solution end-to-end.</p>
-        <a class="plink" href="https://drive.google.com/file/d/19Xej6ZX-GJOieRl1QEb2RJAjecqX717T/view" target="_blank" rel="noopener"><span>View entry</span><span class="arr">↗</span></a>
+        <div class="tag-row"><span>P · 02</span><span class="type">Product Case</span></div>
+        <h4>Flipkart APM Deck</h4>
+        <p>A structured product case on a real Flipkart problem — retention, growth, user-journey diagnosis, and a recommendation that lands.</p>
+        <a class="plink" href="https://drive.google.com/file/d/1eSMQiWW0WuEgw_mhrfNvdS4RdkzAJStG/view" target="_blank" rel="noopener"><span>View deck</span><span class="arr">↗</span></a>
       </article>
     </div>
   </div>
@@ -906,7 +1015,7 @@
 <section id="stack">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="kicker">07 — Stack</div>
+      <div class="kicker">08 — Stack</div>
       <h2>Tools I actually use.</h2>
     </div>
     <div class="stack reveal">
@@ -929,8 +1038,8 @@
   <div class="wrap">
     <div class="contact-wrap reveal">
       <div>
-        <h2>If you're hiring for senior performance or growth — let's talk.</h2>
-        <p class="status">Currently at <b>Housing.com</b>. Open to senior performance / growth roles at consumer-tech companies in India. <b>Delhi NCR</b>, open to relocation.</p>
+        <h2>If you're building a growth engine — let's talk.</h2>
+        <p class="status">Currently at <b>Housing.com</b>, three years in. Open to <b>growth / performance marketing</b> and <b>product</b> roles at mid to mid-senior level. IIT Kharagpur '23. <b>Gurugram</b>, open to relocation.</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <a class="btn" href="mailto:mkchaurasia05@gmail.com">Email me ↗</a>
           <a class="btn ghost" href="https://linkedin.com/in/akashchaurasia05/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -943,6 +1052,10 @@
         </a>
         <a href="https://linkedin.com/in/akashchaurasia05/" target="_blank" rel="noopener">
           <div><div class="lbl">LinkedIn</div><div class="val">linkedin.com/in/akashchaurasia05</div></div>
+          <span class="arr">↗</span>
+        </a>
+        <a href="https://github.com/akash055-commits" target="_blank" rel="noopener">
+          <div><div class="lbl">GitHub</div><div class="val">github.com/akash055-commits</div></div>
           <span class="arr">↗</span>
         </a>
         <a href="tel:+917068765392">
@@ -959,6 +1072,7 @@
   <div class="footer-links">
     <a href="mailto:mkchaurasia05@gmail.com">Email</a>
     <a href="https://linkedin.com/in/akashchaurasia05/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/akash055-commits" target="_blank" rel="noopener">GitHub</a>
     <span>Delhi NCR</span>
   </div>
 </footer>
@@ -1073,12 +1187,22 @@
   /* ── LINKEDIN POSTS ──────────────────────────── */
   function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
+  // Hide the whole section rather than leaving a heading above an empty grid.
+  function hideWriting() {
+    const s = document.getElementById('writing');
+    if (s) s.style.display = 'none';
+    document.querySelectorAll('a[href="#writing"]').forEach(a => {
+      const li = a.closest('li');
+      (li || a).style.display = 'none';
+    });
+  }
+
   fetch('posts.json?t=' + Date.now())
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(data => {
       const grid = document.getElementById('li-posts');
       const upd  = document.getElementById('li-updated');
-      if (!data.posts || !data.posts.length) { grid.innerHTML = ''; return; }
+      if (!data.posts || !data.posts.length) { hideWriting(); return; }
       if (upd && data.lastUpdated) upd.textContent = 'Updated ' + data.lastUpdated;
       grid.innerHTML = data.posts.map(p => `
         <article class="li-post reveal">
@@ -1098,10 +1222,7 @@
         else if (ro) ro.observe(el);
       });
     })
-    .catch(() => {
-      const g = document.getElementById('li-posts');
-      if (g) g.innerHTML = '';
-    });
+    .catch(hideWriting);
 
   /* ── NUMBER COUNT-UP ─────────────────────────── */
   const ease = t => 1 - Math.pow(1 - t, 3);

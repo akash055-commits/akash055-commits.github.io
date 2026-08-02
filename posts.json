@@ -1,26 +1,4 @@
 {
-  "lastUpdated": "2026-05-18",
-  "posts": [
-    {
-      "date": "May 14, 2026",
-      "content": "Ran a geo-holdout across 12 cities. One channel dropped. Topline didn't move.\n\nThat's incrementality. Not last-click attribution games.\n\nOnce you've seen a channel vanish from the data and the business not notice — you stop arguing about platform-reported ROAS and start asking harder questions.\n\nThe uncomfortable truth: most paid media teams are optimising for attribution, not growth.",
-      "likes": 312,
-      "comments": 24,
-      "url": "https://www.linkedin.com/in/akashchaurasia05/"
-    },
-    {
-      "date": "May 7, 2026",
-      "content": "15,000 property videos in 6 weeks. Here's what nobody tells you about AI creative at scale:\n\nThe generation is the easy part. The filter is everything.\n\nWe built a real-time ML scoring model that checks every image before it hits creative rotation. Bad angle, wrong lighting, messy listing — filtered out before the auction.\n\nResult: zero bad-image escalations. Down from weekly firefighting.",
-      "likes": 487,
-      "comments": 41,
-      "url": "https://www.linkedin.com/in/akashchaurasia05/"
-    },
-    {
-      "date": "Apr 28, 2026",
-      "content": "Co-founded Flex EV. Scaled to 700+ vehicles and ₹40L/month in 12 months.\n\nThen made a deliberate decision to step back.\n\nNot a failure. A choice.\n\nThe lesson nobody tells you about startups: sometimes the most operator move is recognising when to consolidate your learning and go build something bigger. Took the scars. Used them.",
-      "likes": 891,
-      "comments": 73,
-      "url": "https://www.linkedin.com/in/akashchaurasia05/"
-    }
-  ]
+  "lastUpdated": "",
+  "posts": []
 }
