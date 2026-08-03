@@ -1,13 +1,12 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <title>Akash Chaurasia — Growth systems, built and scaled</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="description" content="I build the systems that make growth work — creative-scoring ML, CAPI and CRM plumbing, incrementality testing — then scale spend on top of them. ₹3.5 Cr/month at Housing.com. Co-founded Flex EV. IIT Kharagpur, 2023." />
 <link rel="canonical" href="https://www.akashm.site/" />
-<meta name="theme-color" content="#F5F4EE" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0D0D0D" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#0C0C0E" />
 
 <!-- Social share -->
 <meta property="og:type"        content="profile" />
@@ -54,36 +53,10 @@
 
 <style>
   /* ============================================
-     TOKENS — LIGHT
+     TOKENS — dark only, by design. There is no
+     light theme and no toggle.
      ============================================ */
   :root {
-    color-scheme: light;
-    --paper:      #F5F4EE;
-    --paper-2:    #EFEDE5;
-    --card:       #FBFAF6;
-    --wash:       #EDEAE0;
-    --ink:        #0B0D10;
-    --ink-2:      #1F232A;
-    --ink-3:      #3A414D;
-    --muted:      #6B7180;
-    --muted-2:    #9499A3;
-    --rule:       #DDDACF;
-    --rule-soft:  #E6E3D8;
-    --accent:     #C2410C;
-
-    --f-sans:    "Geist", ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
-    --f-display: "Fraunces", "Source Serif 4", Georgia, serif;
-    --f-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-
-    --maxw: 1080px;
-    --pad:  clamp(20px, 4vw, 48px);
-    --nav-h: 52px;
-  }
-
-  /* ============================================
-     TOKENS — DARK
-     ============================================ */
-  :root[data-theme="dark"] {
     color-scheme: dark;
     --paper:      #0C0C0E;
     --paper-2:    #131316;
@@ -97,6 +70,14 @@
     --rule:       #2A2A2E;
     --rule-soft:  #202024;
     --accent:     #E8845C;
+
+    --f-sans:    "Geist", ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
+    --f-display: "Fraunces", "Source Serif 4", Georgia, serif;
+    --f-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --maxw: 1080px;
+    --pad:  clamp(20px, 4vw, 48px);
+    --nav-h: 52px;
   }
 
   /* ============================================
@@ -164,15 +145,6 @@
   .nav ul a:hover { color: var(--ink); background: var(--paper-2); }
   .nav ul a[aria-current="true"] { color: var(--ink); }
   .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .theme-toggle {
-    display: flex; align-items: center; gap: 6px;
-    font-family: var(--f-mono); font-size: 11px; color: var(--muted);
-    background: none; border: 1px solid var(--rule); border-radius: 20px;
-    padding: 6px 12px; cursor: pointer;
-    transition: color .15s, border-color .15s, background .15s;
-    white-space: nowrap; line-height: 1;
-  }
-  .theme-toggle:hover { color: var(--ink); border-color: var(--ink-3); background: var(--paper-2); }
   .nav .cta {
     font-family: var(--f-mono); font-size: 12px; padding: 8px 14px;
     background: var(--ink); color: var(--paper); border-radius: 6px;
@@ -194,7 +166,7 @@
 
   @media (max-width: 820px) {
     .nav ul { display: none; }
-    .nav .cta, .theme-toggle { display: none; }
+    .nav .cta { display: none; }
     .hamburger { display: flex; }
   }
 
@@ -230,8 +202,6 @@
   .mobile-menu nav a:hover { color: var(--accent); }
   .mobile-menu nav a .arr { font-family: var(--f-mono); font-size: 15px; color: var(--muted); }
   .mobile-menu .mobile-ctas { margin-top: 26px; display: flex; flex-direction: column; gap: 12px; }
-  .mobile-menu .m-theme { margin-top: auto; padding-top: 24px; }
-  .mobile-menu .theme-toggle { display: flex; padding: 12px 16px; }
 
   /* ============================================
      LAYOUT
@@ -296,40 +266,16 @@
     display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
     gap: clamp(20px, 4vw, 56px); align-items: center;
   }
-  /* Portrait dissolved into the paper, not boxed on top of it.
-     The photo was shot on a dark backdrop, so the two themes need different
-     treatments: light gets a diagonal dissolve (the dark mass melts toward the
-     bottom-left), dark gets `screen` — which drops the backdrop out entirely. */
+  /* The photo was shot on a dark backdrop, so `screen` drops that backdrop
+     straight out into the page — no border, no box, nothing to blend around.
+     A bottom fade stops the suit ending on a hard line. */
   .hero-portrait img {
     width: 100%; height: auto;
     border: 0; border-radius: 0; box-shadow: none;
-    filter: grayscale(100%) contrast(1.02) brightness(1.12);
-    /* A diagonal dissolve toward the bottom-left, intersected with a fade on
-       each of the four edges — so the photo never ends on a hard line. */
-    -webkit-mask-image:
-      linear-gradient(200deg, #000 4%, rgba(0,0,0,.94) 34%, rgba(0,0,0,.34) 72%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 13%),
-      linear-gradient(to top,    transparent 0%, #000 11%),
-      linear-gradient(to left,   transparent 0%, #000 15%),
-      linear-gradient(to right,  transparent 0%, #000 13%);
-    mask-image:
-      linear-gradient(200deg, #000 4%, rgba(0,0,0,.94) 34%, rgba(0,0,0,.34) 72%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 13%),
-      linear-gradient(to top,    transparent 0%, #000 11%),
-      linear-gradient(to left,   transparent 0%, #000 15%),
-      linear-gradient(to right,  transparent 0%, #000 13%);
-    -webkit-mask-composite: source-in;
-            mask-composite: intersect;
-    transition: filter .3s ease;
-  }
-  :root[data-theme="dark"] .hero-portrait img {
-    /* `screen` drops the dark studio backdrop straight out into the dark page. */
     filter: grayscale(100%) contrast(1.06) brightness(.96);
     mix-blend-mode: screen;
     -webkit-mask-image: linear-gradient(to bottom, #000 72%, rgba(0,0,0,.45) 90%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 72%, rgba(0,0,0,.45) 90%, transparent 100%);
-    -webkit-mask-composite: source-over;
-            mask-composite: add;
+            mask-image: linear-gradient(to bottom, #000 72%, rgba(0,0,0,.45) 90%, transparent 100%);
   }
   @media (max-width: 780px) {
     .hero-grid { grid-template-columns: 1fr; gap: 8px; }
@@ -371,10 +317,8 @@
     display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   }
   .btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--ink-3); }
-  .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  :root[data-theme="dark"] .btn.ghost { color: var(--ink); border-color: var(--rule); }
-  :root[data-theme="dark"] .btn.ghost:hover { background: var(--card); border-color: var(--ink-3); color: var(--ink); }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+  .btn.ghost:hover { background: var(--card); border-color: var(--ink-3); color: var(--ink); }
   .btn .arr { font-family: var(--f-mono); font-size: 13px; }
 
   /* ============================================
@@ -509,15 +453,13 @@
   @media (max-width: 640px) { .ownership { grid-template-columns: 1fr; } }
 
   .note {
-    padding: 24px 28px; background: var(--ink); color: var(--paper); border-radius: 8px;
+    padding: 24px 28px; background: var(--paper-2); border: 1px solid var(--rule);
+    border-radius: 8px;
   }
-  :root[data-theme="dark"] .note { background: var(--paper-2); border: 1px solid var(--rule); }
   .note .tag { font-family: var(--f-mono); font-size: 11px; color: var(--accent); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
   .note .tag::before { content: ""; width: 18px; height: 1px; background: var(--accent); display: inline-block; }
-  .note p { font-family: var(--f-display); font-weight: 400; font-style: italic; font-size: clamp(16px, 2vw, 20px); line-height: 1.44; margin: 0; color: #E4E1D3; }
-  :root[data-theme="dark"] .note p { color: var(--ink-2); }
-  .note p b { color: var(--paper); font-weight: 500; font-style: normal; }
-  :root[data-theme="dark"] .note p b { color: var(--ink); }
+  .note p { font-family: var(--f-display); font-weight: 400; font-style: italic; font-size: clamp(16px, 2vw, 20px); line-height: 1.44; margin: 0; color: var(--ink-2); }
+  .note p b { color: var(--ink); font-weight: 500; font-style: normal; }
 
   /* ============================================
      HOW I THINK
@@ -670,10 +612,6 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-        <span id="theme-icon">☀</span>
-        <span id="theme-label">Dark</span>
-      </button>
       <a class="cta" href="mailto:mkchaurasia05@gmail.com">Email →</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -696,12 +634,6 @@
   <div class="mobile-ctas">
     <a class="btn" href="mailto:mkchaurasia05@gmail.com">Email me ↗</a>
     <a class="btn ghost" href="https://linkedin.com/in/akashchaurasia05/" target="_blank" rel="noopener">LinkedIn ↗</a>
-  </div>
-  <div class="m-theme">
-    <button class="theme-toggle" id="theme-toggle-m" aria-label="Toggle dark mode">
-      <span id="theme-icon-m">☀</span>
-      <span id="theme-label-m">Dark mode</span>
-    </button>
   </div>
 </div>
 
@@ -1106,29 +1038,6 @@
   'use strict';
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const html = document.documentElement;
-
-  /* ── THEME ───────────────────────────────────── */
-  const toggles = [
-    { btn: 'theme-toggle',   icon: 'theme-icon',   label: 'theme-label'   },
-    { btn: 'theme-toggle-m', icon: 'theme-icon-m', label: 'theme-label-m' },
-  ];
-  function applyTheme(dark) {
-    html.setAttribute('data-theme', dark ? 'dark' : 'light');
-    toggles.forEach(({ icon, label }) => {
-      const i = document.getElementById(icon);
-      const l = document.getElementById(label);
-      if (i) i.textContent = dark ? '☾' : '☀';
-      if (l) l.textContent = dark ? 'Light' : 'Dark';
-    });
-    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
-  }
-  let saved = null;
-  try { saved = localStorage.getItem('theme'); } catch (e) {}
-  applyTheme(saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches);
-  toggles.forEach(({ btn }) => {
-    const el = document.getElementById(btn);
-    if (el) el.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') !== 'dark'));
-  });
 
   /* ── MOBILE MENU ─────────────────────────────── */
   const hamburger  = document.getElementById('hamburger');
