@@ -7,6 +7,7 @@ Served by GitHub Pages from `main` at the repo root; `CNAME` points it at `www.a
 index.html                            everything — markup, CSS tokens, JS, all inline
 posts.json                            LinkedIn posts, written by the Action (never by hand)
 photos/                               .jpeg + .webp pairs, plus og-card.png
+games/velocity-rush/                  built copy of the car_game repo (do not edit by hand)
 favicon.svg  apple-touch-icon.png
 robots.txt   sitemap.xml
 .github/workflows/                    the LinkedIn feed updater
@@ -53,6 +54,18 @@ cwebp -q 74 photo.jpeg -o photo.webp
 ```
 
 Then add the `<picture>` block with explicit `width`/`height` — they prevent layout shift.
+
+## Games
+
+`games/velocity-rush/` is the production build of
+[car_game](https://github.com/akash055-commits/car_game). To update it:
+
+```bash
+cd car_game && npm ci && npm run build:portfolio
+rm -rf ../akash055-commits.github.io/games/velocity-rush
+mkdir -p ../akash055-commits.github.io/games/velocity-rush
+cp -r dist-portfolio/index.html dist-portfolio/assets dist-portfolio/favicon.svg ../akash055-commits.github.io/games/velocity-rush/
+```
 
 ## Deploy
 

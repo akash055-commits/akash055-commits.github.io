@@ -6,4 +6,10 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://www.akashm.site/games/velocity-rush/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

@@ -582,6 +582,65 @@
      REVEAL — calmer than before
      ============================================ */
   .num-target { font-variant-numeric: tabular-nums; }
+
+  /* ============================================
+     GAMES
+     ============================================ */
+  .games { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .game-card {
+    position: relative; display: grid; grid-template-columns: 1.25fr 1fr; overflow: hidden;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 14px;
+    transition: border-color .25s ease, transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .35s ease;
+  }
+  .game-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 18px 50px -20px color-mix(in oklab, var(--accent) 55%, transparent); }
+  .game-cover { position: relative; display: block; overflow: hidden; background: #000; min-height: 240px; }
+  .game-cover picture, .game-cover img { width: 100%; height: 100%; object-fit: cover; }
+  .game-cover img { transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .4s ease; filter: saturate(1.05); }
+  .game-card:hover .game-cover img { transform: scale(1.06); filter: saturate(1.25); }
+  .game-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 55%, var(--card)); pointer-events: none; }
+  .game-play {
+    position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; margin: -38px 0 0 -38px; border-radius: 50%; z-index: 2;
+    display: grid; place-items: center; background: color-mix(in oklab, var(--accent) 88%, transparent); color: #fff;
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent);
+    animation: gamePulse 2.2s ease-out infinite; transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .game-play svg { width: 28px; height: 28px; margin-left: 4px; }
+  .game-card:hover .game-play { transform: scale(1.12); }
+  @keyframes gamePulse { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 22px transparent; } }
+  .game-info { padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+  .game-head { display: flex; align-items: center; gap: 14px; }
+  .game-icon {
+    flex: none; width: 60px; height: 60px; border-radius: 16px; display: block;
+    background: linear-gradient(140deg, #ff6d00, #ff3d7f 55%, #00b8d4);
+    box-shadow: 0 8px 22px -6px rgba(255, 61, 127, .55), inset 0 1px 0 rgba(255,255,255,.35);
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .game-icon svg { width: 100%; height: 100%; display: block; }
+  .game-icon .wheel { transform-box: fill-box; transform-origin: center; }
+  .game-card:hover .game-icon { transform: rotate(-6deg) scale(1.08); }
+  .game-card:hover .game-icon .wheel { animation: wheelSpin .5s linear infinite; }
+  .game-card:hover .game-icon .car { animation: carBounce .35s ease-in-out infinite alternate; }
+  .game-icon .lines line { stroke-dasharray: 8 30; animation: speedLines .7s linear infinite; }
+  @keyframes wheelSpin { to { transform: rotate(360deg); } }
+  @keyframes carBounce { to { transform: translateY(-1.5px); } }
+  @keyframes speedLines { to { stroke-dashoffset: -38; } }
+  .game-head h3 { font-family: var(--f-display); font-weight: 500; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.1; letter-spacing: -.015em; margin: 0; }
+  .game-head .sub { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-top: 4px; }
+  .game-info p { margin: 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.6; }
+  .game-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .game-chips span { font-family: var(--f-mono); font-size: 11px; color: var(--ink-2); border: 1px solid var(--rule); border-radius: 999px; padding: 4px 10px; }
+  .game-keys { font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); }
+  .game-keys kbd { font-family: inherit; color: var(--ink); background: var(--wash); border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; }
+  .game-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
+  @media (max-width: 780px) {
+    .game-card { grid-template-columns: 1fr; }
+    .game-cover { min-height: 0; aspect-ratio: 16 / 9; }
+    .game-cover::after { background: linear-gradient(180deg, transparent 60%, var(--card)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .game-play, .game-icon .lines line, .game-card:hover .game-icon .wheel, .game-card:hover .game-icon .car { animation: none !important; }
+  }
+
   .reveal { opacity: 0; transform: translateY(10px); transition: opacity .5s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
   .reveal.d1 { transition-delay: .07s; }
@@ -608,6 +667,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#work">Work</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#games">Games</a></li>
       <li><a href="#thinking">Thinking</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -628,6 +688,7 @@
     <a href="#about"    class="ml">About <span class="arr">→</span></a>
     <a href="#work"     class="ml">Work <span class="arr">→</span></a>
     <a href="#projects" class="ml">Projects <span class="arr">→</span></a>
+    <a href="#games"    class="ml">Games <span class="arr">→</span></a>
     <a href="#thinking" class="ml">Thinking <span class="arr">→</span></a>
     <a href="#contact"  class="ml">Contact <span class="arr">→</span></a>
   </nav>
@@ -949,6 +1010,57 @@
         <h4>Flipkart APM Deck</h4>
         <p>A structured product case on a real Flipkart problem — retention, growth, user-journey diagnosis, and a recommendation that lands.</p>
         <a class="plink" href="https://drive.google.com/file/d/1eSMQiWW0WuEgw_mhrfNvdS4RdkzAJStG/view" target="_blank" rel="noopener"><span>View deck</span><span class="arr">↗</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GAMES ============ -->
+<section id="games" data-bucket="Games">
+  <div class="wrap">
+    <div class="bucket-head reveal">
+      <div class="tag">Games</div>
+      <h2>Something to play while you're here.</h2>
+    </div>
+
+    <div class="games">
+      <article class="game-card reveal">
+        <a class="game-cover" href="/games/velocity-rush/" aria-label="Play Velocity Rush">
+          <picture>
+            <source srcset="photos/games/velocity-rush.webp" type="image/webp">
+            <img src="photos/games/velocity-rush.jpeg" alt="Velocity Rush — a sports car on the start line under a sunset sky" width="800" height="448" loading="lazy" decoding="async">
+          </picture>
+          <span class="game-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L7.5 3.64A1 1 0 0 0 6 4.5z"/></svg></span>
+        </a>
+        <div class="game-info">
+          <div class="game-head">
+            <a class="game-icon" href="/games/velocity-rush/" aria-label="Play Velocity Rush">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <g class="lines" stroke="rgba(255,255,255,.75)" stroke-width="2.2" stroke-linecap="round">
+                  <line x1="4" y1="24" x2="20" y2="24"/><line x1="2" y1="31" x2="16" y2="31"/><line x1="6" y1="38" x2="18" y2="38"/>
+                </g>
+                <g class="car">
+                  <path d="M14 40c0-3 1.6-5 4.5-5.6l7-1.6 6.2-6.4c1.3-1.3 3-2 4.8-2h7.5c2 0 3.8.9 5 2.5l4.2 5.6 3.3.9c2.2.6 3.5 2.6 3.5 4.8V42c0 1.1-.9 2-2 2H16c-1.1 0-2-.9-2-2z" fill="#fff"/>
+                  <path d="M30.5 33l4.4-4.6c.8-.8 1.8-1.2 2.9-1.2h3.4V33zM44.4 33v-5.8h1.4c1.1 0 2.1.5 2.8 1.4l3.3 4.4z" fill="#1d2a3a"/>
+                  <rect x="56" y="36.5" width="4" height="2" rx="1" fill="#ff1744"/>
+                  <g class="wheel"><circle cx="24" cy="44" r="5.2" fill="#1d2a3a"/><circle cx="24" cy="44" r="2" fill="#cfd8dc"/><rect x="23.4" y="39.6" width="1.2" height="8.8" fill="#cfd8dc"/></g>
+                  <g class="wheel"><circle cx="50" cy="44" r="5.2" fill="#1d2a3a"/><circle cx="50" cy="44" r="2" fill="#cfd8dc"/><rect x="49.4" y="39.6" width="1.2" height="8.8" fill="#cfd8dc"/></g>
+                </g>
+              </svg>
+            </a>
+            <div>
+              <h3>Velocity Rush</h3>
+              <div class="sub">3D driving · runs in the browser</div>
+            </div>
+          </div>
+          <p>A 3D driving game I built with three.js and the Rapier physics engine. The car has real suspension, a gearbox, and handbrake drifts. Drive freely around an open world with ramps and collectibles, or race three laps against your own ghost. Every sound is synthesized live in the browser, with no audio files.</p>
+          <div class="game-chips"><span>Free roam</span><span>Time trial + ghost</span><span>Drift scoring</span><span>Day / sunset / night</span><span>Gamepad &amp; touch</span></div>
+          <div class="game-keys"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> drive · <kbd>Space</kbd> handbrake · <kbd>Shift</kbd> nitro</div>
+          <div class="game-actions">
+            <a class="btn" href="/games/velocity-rush/">Play now <span class="arr">→</span></a>
+            <a class="btn ghost" href="https://github.com/akash055-commits/car_game" target="_blank" rel="noopener">Source <span class="arr">↗</span></a>
+          </div>
+        </div>
       </article>
     </div>
   </div>
