@@ -7,7 +7,8 @@ Served by GitHub Pages from `main` at the repo root; `CNAME` points it at `www.a
 index.html                            everything — markup, CSS tokens, JS, all inline
 posts.json                            LinkedIn posts, written by the Action (never by hand)
 photos/                               .jpeg + .webp pairs, plus og-card.png
-games/velocity-rush/                  built copy of the car_game repo (do not edit by hand)
+games/seasons-valley/                 built copy of the car_game repo (do not edit by hand)
+games/velocity-rush/                  redirect to seasons-valley (keeps old shared links working)
 favicon.svg  apple-touch-icon.png
 robots.txt   sitemap.xml
 .github/workflows/                    the LinkedIn feed updater
@@ -57,15 +58,19 @@ Then add the `<picture>` block with explicit `width`/`height` — they prevent l
 
 ## Games
 
-`games/velocity-rush/` is the production build of
-[car_game](https://github.com/akash055-commits/car_game). To update it:
+`games/seasons-valley/` is the production build of
+[car_game](https://github.com/akash055-commits/car_game) (its build uses relative paths, so no
+special base is needed). To update it:
 
 ```bash
-cd car_game && npm ci && npm run build:portfolio
-rm -rf ../akash055-commits.github.io/games/velocity-rush
-mkdir -p ../akash055-commits.github.io/games/velocity-rush
-cp -r dist-portfolio/index.html dist-portfolio/assets dist-portfolio/favicon.svg ../akash055-commits.github.io/games/velocity-rush/
+cd car_game && npm ci && npm run build
+rm -rf ../akash055-commits.github.io/games/seasons-valley
+mkdir -p ../akash055-commits.github.io/games/seasons-valley
+cp -r dist/. ../akash055-commits.github.io/games/seasons-valley/
 ```
+
+`dist/` includes the three background-music tracks under `sounds/music/` (CC0, licence alongside).
+`games/velocity-rush/` only holds a redirect to the new path.
 
 ## Deploy
 
